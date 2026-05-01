@@ -6,7 +6,7 @@ export default async function TopNavBar() {
   const regions = await getRegionsWithDestinations();
 
   return (
-    <nav className="fixed top-0 w-full z-50 bg-white/80 dark:bg-zinc-900/80 backdrop-blur-lg tonal-transition">
+    <nav className="fixed top-0 w-full z-50 bg-white/80 dark:bg-zinc-900/80 backdrop-blur-lg tonal-transition animate-slide-down">
       <div className="flex justify-between items-center px-8 py-4 max-w-7xl mx-auto">
         <Link
           href="/"

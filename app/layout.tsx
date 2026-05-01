@@ -1,6 +1,8 @@
 import type { Metadata } from "next";
 import { Manrope, Plus_Jakarta_Sans } from "next/font/google";
 import "./globals.css";
+import { PageTransition } from "@/components/motion/PageTransition";
+import { SmoothScroller } from "@/components/SmoothScroller";
 
 const plusJakartaSans = Plus_Jakarta_Sans({
   subsets: ["latin"],
@@ -30,7 +32,9 @@ export default function RootLayout({
       <body
         className={`${plusJakartaSans.variable} ${manrope.variable} bg-background text-on-background font-body selection:bg-secondary-fixed-dim selection:text-on-secondary-fixed`}
       >
-        {children}
+        <SmoothScroller>
+          <PageTransition>{children}</PageTransition>
+        </SmoothScroller>
       </body>
     </html>
   );

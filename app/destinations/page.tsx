@@ -1,4 +1,7 @@
 import TopNavBar from "@/components/TopNavBar";
+import { FadeUp } from "@/components/motion/FadeUp";
+import { StaggerGrid } from "@/components/motion/StaggerGrid";
+import { StaggerItem } from "@/components/motion/StaggerItem";
 import {
   getAllDestinations,
   getImageUrl,

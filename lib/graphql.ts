@@ -44,7 +44,7 @@ export type WPPost = {
   content: string;
   date: string;
   featuredImage: { node: WPImage } | null;
-  categories: { nodes: { name: string }[] };
+  categories: { nodes: { name: string; slug: string }[] };
   blogPostDetails: {
     readTime: string | null;
     featured: boolean | null;
@@ -58,7 +58,7 @@ export type WPDestination = {
   slug: string;
   content: string;
   featuredImage: { node: WPImage } | null;
-  regions: { nodes: { name: string }[] };
+  regions: { nodes: { name: string; slug: string }[] };
   destinationDetails: {
     excerpt: string | null;
     visitDate: string | null;
@@ -80,7 +80,7 @@ const POST_FIELDS = `
     node { sourceUrl altText }
   }
   categories {
-    nodes { name }
+    nodes { name slug }
   }
   blogPostDetails {
     readTime
@@ -132,7 +132,7 @@ const DESTINATION_FIELDS = `
     node { sourceUrl altText }
   }
   regions {
-    nodes { name }
+    nodes { name slug }
   }
   destinationDetails {
     excerpt
