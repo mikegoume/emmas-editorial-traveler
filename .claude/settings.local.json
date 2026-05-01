@@ -4,7 +4,9 @@
       "Skill(update-config)",
       "Bash(python3 -c \"import json,sys; d=json.load\\(sys.stdin\\); exports=d.get\\('exports',{}\\); [print\\(k\\) for k in exports.keys\\(\\)]\")",
       "Bash(node -e \"const d=require\\('fs'\\).readFileSync\\('/dev/stdin','utf8'\\); const p=JSON.parse\\(d\\); console.log\\(Object.keys\\(p.exports || {}\\).join\\('\\\\n'\\)\\)\")",
-      "Bash(npm run *)"
+      "Bash(npm run *)",
+      "Bash(node -e \"require\\('lenis/react'\\)\")",
+      "Bash(node -e \"const pkg = require\\('./node_modules/lenis/package.json'\\); console.log\\(JSON.stringify\\(pkg.exports?.['./react'] ?? 'NOT FOUND', null, 2\\)\\)\")"
     ]
   }
 }

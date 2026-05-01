@@ -2,19 +2,7 @@ import Footer from "@/components/Footer";
 import TopNavBar from "@/components/TopNavBar";
 import { FadeUp } from "@/components/motion/FadeUp";
 import ScrollExpandMedia from "@/components/ui/scroll-expansion-hero";
-import { ExpandingCards, type CardItem } from "@/components/ui/expanding-cards";
-import {
-  MapPin,
-  Globe,
-  Camera,
-  Mountain,
-  Compass,
-  Landmark,
-  Waves,
-  TreePine,
-  Sun,
-  Building,
-} from "lucide-react";
+import { DestinationExpandingCards } from "@/components/DestinationExpandingCards";
 import {
   formatDate,
   getAllPosts,
@@ -43,28 +31,12 @@ export default async function HomePage() {
     ? getImageUrl(featuredPost)
     : "https://images.unsplash.com/photo-1476514525535-07fb3b4ae5f1?q=80&w=1920&auto=format";
 
-  const destIcons = [
-    <MapPin key="pin" size={22} />,
-    <Globe key="globe" size={22} />,
-    <Camera key="camera" size={22} />,
-    <Mountain key="mountain" size={22} />,
-    <Compass key="compass" size={22} />,
-    <Landmark key="landmark" size={22} />,
-    <Waves key="waves" size={22} />,
-    <TreePine key="tree" size={22} />,
-    <Sun key="sun" size={22} />,
-    <Building key="building" size={22} />,
-  ];
-
-  const destinationCards: CardItem[] = destinations.map((dest, i) => ({
+  const destinationData = destinations.map((dest) => ({
     id: dest.id,
     title: dest.title,
-    description:
-      dest.destinationDetails?.excerpt ??
-      "A destination waiting to be explored.",
+    excerpt: dest.destinationDetails?.excerpt ?? null,
     imgSrc: getImageUrl(dest),
-    icon: destIcons[i % destIcons.length],
-    linkHref: `/destinations/${dest.slug}`,
+    slug: dest.slug,
   }));
 
   return (
@@ -107,10 +79,7 @@ export default async function HomePage() {
             </p>
           ) : (
             <FadeUp delay={0.1}>
-              <ExpandingCards
-                items={destinationCards}
-                defaultActiveIndex={0}
-              />
+              <DestinationExpandingCards destinations={destinationData} />
             </FadeUp>
           )}
         </section>
