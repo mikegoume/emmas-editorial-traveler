@@ -1,7 +1,4 @@
 import TopNavBar from "@/components/TopNavBar";
-import { FadeUp } from "@/components/motion/FadeUp";
-import { StaggerGrid } from "@/components/motion/StaggerGrid";
-import { StaggerItem } from "@/components/motion/StaggerItem";
 import {
   getAllDestinations,
   getImageUrl,
@@ -26,19 +23,6 @@ export default async function DestinationsPage() {
     <>
       <TopNavBar />
       <main className="pt-16">
-        {/* Breadcrumb */}
-        <div className="max-w-7xl mx-auto px-8 py-8">
-          <nav className="flex items-center space-x-2 text-sm font-label uppercase tracking-widest text-outline-variant">
-            <Link href="/" className="hover:text-secondary transition-colors">
-              Home
-            </Link>
-            <span className="material-symbols-outlined text-xs">
-              chevron_right
-            </span>
-            <span className="text-on-surface">Destinations</span>
-          </nav>
-        </div>
-
         {/* Hero */}
         <section className="max-w-[1440px] mx-auto px-4 md:px-8">
           <div className="relative h-[600px] rounded-xl md:rounded-lg overflow-hidden">
@@ -243,7 +227,6 @@ export default async function DestinationsPage() {
                 { label: "Home", href: "/" },
                 { label: "Blog", href: "/blog" },
                 { label: "About", href: "/about" },
-                { label: "Contact", href: "/about#contact" },
               ].map((l) => (
                 <li key={l.label}>
                   <Link

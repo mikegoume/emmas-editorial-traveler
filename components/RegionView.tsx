@@ -10,28 +10,6 @@ export default function RegionView({ region }: { region: WPRegion }) {
     <>
       <TopNavBar />
       <main className="pt-16">
-        {/* Breadcrumb */}
-        <div className="max-w-7xl mx-auto px-8 py-8">
-          <nav className="flex items-center space-x-2 text-sm font-label uppercase tracking-widest text-outline-variant">
-            <Link href="/" className="hover:text-secondary transition-colors">
-              Home
-            </Link>
-            <span className="material-symbols-outlined text-xs">
-              chevron_right
-            </span>
-            <Link
-              href="/destinations"
-              className="hover:text-secondary transition-colors"
-            >
-              Destinations
-            </Link>
-            <span className="material-symbols-outlined text-xs">
-              chevron_right
-            </span>
-            <span className="text-on-surface">{region.name}</span>
-          </nav>
-        </div>
-
         {/* Hero Banner */}
         <section className="max-w-[1440px] mx-auto px-4 md:px-8">
           <div className="relative h-[600px] rounded-xl md:rounded-lg overflow-hidden">

@@ -42,41 +42,6 @@ export default function DestinationView({
           </div>
         </section>
 
-        {/* Breadcrumb */}
-        <div className="max-w-7xl mx-auto px-8 py-6">
-          <nav className="flex items-center space-x-2 text-sm font-label uppercase tracking-widest text-outline-variant">
-            <Link href="/" className="hover:text-secondary transition-colors">
-              Home
-            </Link>
-            <span className="material-symbols-outlined text-xs">
-              chevron_right
-            </span>
-            <Link
-              href="/destinations"
-              className="hover:text-secondary transition-colors"
-            >
-              Destinations
-            </Link>
-            {region && (
-              <>
-                <span className="material-symbols-outlined text-xs">
-                  chevron_right
-                </span>
-                <Link
-                  href={`/destinations/${region.slug}`}
-                  className="hover:text-secondary transition-colors"
-                >
-                  {region.name}
-                </Link>
-              </>
-            )}
-            <span className="material-symbols-outlined text-xs">
-              chevron_right
-            </span>
-            <span className="text-on-surface">{destination.title}</span>
-          </nav>
-        </div>
-
         {/* Body */}
         <section className="py-16 px-6 max-w-7xl mx-auto">
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-16">

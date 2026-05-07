@@ -61,7 +61,7 @@ module.exports = {
         "surface-dim": "#d7dbdb",
       },
       borderRadius: {
-        DEFAULT: "1rem",
+        DEFAULT: "3rem",
         lg: "2rem",
         xl: "3rem",
         full: "9999px",

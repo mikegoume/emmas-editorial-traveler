@@ -103,30 +103,6 @@ export default async function BlogPostPage({
           </div>
         </section>
 
-        {/* ── Breadcrumb ─────────────────────────────────────────────── */}
-        <div className="max-w-4xl mx-auto px-8 py-6">
-          <nav className="flex items-center space-x-2 text-sm font-label uppercase tracking-widest text-outline-variant">
-            <Link href="/" className="hover:text-secondary transition-colors">
-              Home
-            </Link>
-            <span className="material-symbols-outlined text-xs">
-              chevron_right
-            </span>
-            <Link
-              href="/blog"
-              className="hover:text-secondary transition-colors"
-            >
-              Blog
-            </Link>
-            <span className="material-symbols-outlined text-xs">
-              chevron_right
-            </span>
-            <span className="text-on-surface truncate max-w-[300px]">
-              {post.title}
-            </span>
-          </nav>
-        </div>
-
         {/* ── Article Body ───────────────────────────────────────────── */}
         <article className="max-w-4xl mx-auto px-8 py-12">
           {/* Lede / excerpt */}

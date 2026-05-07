@@ -176,7 +176,7 @@ export async function getDestinationBySlug(
 export async function getFeaturedDestinations(): Promise<WPDestination[]> {
   const all = await getAllDestinations();
   const featured = all.filter((d) => d.destinationDetails?.featured);
-  return featured.length > 0 ? featured.slice(0, 3) : all.slice(0, 3);
+  return featured.length > 0 ? featured.slice(0, 5) : all.slice(0, 5);
 }
 
 // ─── Helpers ───────────────────────────────────────────────────────────────

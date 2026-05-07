@@ -1,8 +1,8 @@
+import { DestinationExpandingCards } from "@/components/DestinationExpandingCards";
 import Footer from "@/components/Footer";
 import TopNavBar from "@/components/TopNavBar";
 import { FadeUp } from "@/components/motion/FadeUp";
 import ScrollExpandMedia from "@/components/ui/scroll-expansion-hero";
-import { DestinationExpandingCards } from "@/components/DestinationExpandingCards";
 import {
   formatDate,
   getAllPosts,
@@ -38,6 +38,8 @@ export default async function HomePage() {
     imgSrc: getImageUrl(dest),
     slug: dest.slug,
   }));
+
+  console.log(destinationData.length);
 
   return (
     <>

@@ -1,18 +1,18 @@
-'use client';
+"use client";
 
+import { useLenis } from "lenis/react";
+import { motion } from "motion/react";
 import {
+  ReactNode,
+  TouchEvent,
   useEffect,
   useRef,
   useState,
-  ReactNode,
-  TouchEvent,
   WheelEvent,
-} from 'react';
-import { motion } from 'motion/react';
-import { useLenis } from 'lenis/react';
+} from "react";
 
 interface ScrollExpandMediaProps {
-  mediaType?: 'video' | 'image';
+  mediaType?: "video" | "image";
   mediaSrc: string;
   posterSrc?: string;
   bgImageSrc: string;
@@ -24,7 +24,7 @@ interface ScrollExpandMediaProps {
 }
 
 const ScrollExpandMedia = ({
-  mediaType = 'video',
+  mediaType = "video",
   mediaSrc,
   posterSrc,
   bgImageSrc,
@@ -68,7 +68,7 @@ const ScrollExpandMedia = ({
         const scrollDelta = e.deltaY * 0.0009;
         const newProgress = Math.min(
           Math.max(scrollProgress + scrollDelta, 0),
-          1
+          1,
         );
         setScrollProgress(newProgress);
 
@@ -100,7 +100,7 @@ const ScrollExpandMedia = ({
         const scrollDelta = deltaY * scrollFactor;
         const newProgress = Math.min(
           Math.max(scrollProgress + scrollDelta, 0),
-          1
+          1,
         );
         setScrollProgress(newProgress);
 
@@ -125,37 +125,37 @@ const ScrollExpandMedia = ({
       }
     };
 
-    window.addEventListener('wheel', handleWheel as unknown as EventListener, {
+    window.addEventListener("wheel", handleWheel as unknown as EventListener, {
       passive: false,
     });
-    window.addEventListener('scroll', handleScroll as EventListener);
+    window.addEventListener("scroll", handleScroll as EventListener);
     window.addEventListener(
-      'touchstart',
+      "touchstart",
       handleTouchStart as unknown as EventListener,
-      { passive: false }
+      { passive: false },
     );
     window.addEventListener(
-      'touchmove',
+      "touchmove",
       handleTouchMove as unknown as EventListener,
-      { passive: false }
+      { passive: false },
     );
-    window.addEventListener('touchend', handleTouchEnd as EventListener);
+    window.addEventListener("touchend", handleTouchEnd as EventListener);
 
     return () => {
       window.removeEventListener(
-        'wheel',
-        handleWheel as unknown as EventListener
+        "wheel",
+        handleWheel as unknown as EventListener,
       );
-      window.removeEventListener('scroll', handleScroll as EventListener);
+      window.removeEventListener("scroll", handleScroll as EventListener);
       window.removeEventListener(
-        'touchstart',
-        handleTouchStart as unknown as EventListener
+        "touchstart",
+        handleTouchStart as unknown as EventListener,
       );
       window.removeEventListener(
-        'touchmove',
-        handleTouchMove as unknown as EventListener
+        "touchmove",
+        handleTouchMove as unknown as EventListener,
       );
-      window.removeEventListener('touchend', handleTouchEnd as EventListener);
+      window.removeEventListener("touchend", handleTouchEnd as EventListener);
     };
   }, [scrollProgress, mediaFullyExpanded, touchStartY]);
 
@@ -165,17 +165,17 @@ const ScrollExpandMedia = ({
     };
 
     checkIfMobile();
-    window.addEventListener('resize', checkIfMobile);
+    window.addEventListener("resize", checkIfMobile);
 
-    return () => window.removeEventListener('resize', checkIfMobile);
+    return () => window.removeEventListener("resize", checkIfMobile);
   }, []);
 
   const mediaWidth = 300 + scrollProgress * (isMobileState ? 650 : 1250);
   const mediaHeight = 400 + scrollProgress * (isMobileState ? 200 : 400);
   const textTranslateX = scrollProgress * (isMobileState ? 180 : 150);
 
-  const firstWord = title ? title.split(' ')[0] : '';
-  const restOfTitle = title ? title.split(' ').slice(1).join(' ') : '';
+  const firstWord = title ? title.split(" ")[0] : "";
+  const restOfTitle = title ? title.split(" ").slice(1).join(" ") : "";
 
   return (
     <div
@@ -201,29 +201,29 @@ const ScrollExpandMedia = ({
           <div className="w-full flex flex-col items-center justify-start relative z-10">
             <div className="flex flex-col items-center justify-center w-full h-[100dvh] relative">
               <div
-                className="absolute z-0 top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 transition-none rounded-2xl"
+                className="absolute z-0 top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 transition-none rounded-[3rem]"
                 style={{
                   width: `${mediaWidth}px`,
                   height: `${mediaHeight}px`,
-                  maxWidth: '95vw',
-                  maxHeight: '85vh',
-                  boxShadow: '0px 0px 50px rgba(0, 0, 0, 0.3)',
+                  maxWidth: "95vw",
+                  maxHeight: "85vh",
+                  boxShadow: "0px 0px 50px rgba(0, 0, 0, 0.3)",
                 }}
               >
-                {mediaType === 'video' ? (
-                  mediaSrc.includes('youtube.com') ? (
+                {mediaType === "video" ? (
+                  mediaSrc.includes("youtube.com") ? (
                     <div className="relative w-full h-full pointer-events-none">
                       <iframe
                         width="100%"
                         height="100%"
                         src={
-                          mediaSrc.includes('embed')
+                          mediaSrc.includes("embed")
                             ? mediaSrc +
-                              (mediaSrc.includes('?') ? '&' : '?') +
-                              'autoplay=1&mute=1&loop=1&controls=0&showinfo=0&rel=0&disablekb=1&modestbranding=1'
-                            : mediaSrc.replace('watch?v=', 'embed/') +
-                              '?autoplay=1&mute=1&loop=1&controls=0&showinfo=0&rel=0&disablekb=1&modestbranding=1&playlist=' +
-                              mediaSrc.split('v=')[1]
+                              (mediaSrc.includes("?") ? "&" : "?") +
+                              "autoplay=1&mute=1&loop=1&controls=0&showinfo=0&rel=0&disablekb=1&modestbranding=1"
+                            : mediaSrc.replace("watch?v=", "embed/") +
+                              "?autoplay=1&mute=1&loop=1&controls=0&showinfo=0&rel=0&disablekb=1&modestbranding=1&playlist=" +
+                              mediaSrc.split("v=")[1]
                         }
                         className="w-full h-full rounded-xl"
                         frameBorder="0"
@@ -264,7 +264,7 @@ const ScrollExpandMedia = ({
                   <div className="relative w-full h-full">
                     <img
                       src={mediaSrc}
-                      alt={title || 'Media content'}
+                      alt={title || "Media content"}
                       className="w-full h-full object-cover rounded-xl"
                     />
                     <motion.div
@@ -298,7 +298,7 @@ const ScrollExpandMedia = ({
 
               <div
                 className={`flex items-center justify-center text-center gap-4 w-full relative z-10 transition-none flex-col ${
-                  textBlend ? 'mix-blend-difference' : 'mix-blend-normal'
+                  textBlend ? "mix-blend-difference" : "mix-blend-normal"
                 }`}
               >
                 <motion.h1
