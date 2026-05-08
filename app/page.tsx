@@ -2,6 +2,7 @@ import { DestinationExpandingCards } from "@/components/DestinationExpandingCard
 import Footer from "@/components/Footer";
 import TopNavBar from "@/components/TopNavBar";
 import { FadeUp } from "@/components/motion/FadeUp";
+import { PortfolioGallery } from "@/components/ui/portfolio-gallery";
 import ScrollExpandMedia from "@/components/ui/scroll-expansion-hero";
 import {
   formatDate,
@@ -85,6 +86,14 @@ export default async function HomePage() {
             </FadeUp>
           )}
         </section>
+
+        <PortfolioGallery
+          title="Explore Our Visual Journal"
+          archiveButton={{
+            text: "Browse all photos",
+            href: "/gallery",
+          }}
+        />
 
         {/* ── Latest Chronicles ──────────────────────────────────────── */}
         <section className="py-32 bg-surface-container-low">
@@ -198,67 +207,7 @@ export default async function HomePage() {
             </div>
           </div>
         </section>
-
-        {/* ── About Teaser ───────────────────────────────────────────── */}
-        <section className="py-32 px-8 max-w-7xl mx-auto overflow-hidden">
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-20 items-center">
-            <FadeUp delay={0}>
-              <div className="relative">
-                <div className="aspect-[4/5] bg-surface-container-high rounded-lg relative overflow-hidden">
-                  <img
-                    className="w-full h-full object-cover"
-                    src="https://lh3.googleusercontent.com/aida-public/AB6AXuDxF8Mrkdfo4cg09JrTErtqRjUXNP97IrSSp_FVggnLyhsoOruYsStxqs5mmYHK3SU_gSdbAly5lDVu36bavntxzG6Zp4YzU6_X-Bf8WOMvI43ckmBKoxwSyPCeTb8vCNGnBd2fO4JXsccEiKMvWWBaRGSQxxilBeUVhriY12F53Qa00PySHGPrcE--1vER_ETBIjZI2FfvpjsGXuFN853v1SzxMySNU8g1POIVOXzlknEQbBAB6ef-V3-QaidU6R7feGaAEQLuYw"
-                    alt="Author portrait"
-                  />
-                </div>
-                <div className="absolute -bottom-8 -right-8 w-64 h-64 bg-secondary/10 rounded-full blur-3xl -z-10" />
-              </div>
-            </FadeUp>
-            <FadeUp delay={0.15}>
-              <div>
-                <span className="text-secondary font-label font-bold tracking-widest text-xs mb-4 block uppercase">
-                  Behind the Lens
-                </span>
-                <h2 className="text-4xl md:text-5xl font-headline font-extrabold text-on-background mb-8 leading-tight">
-                  Capturing the world, <br />
-                  one frame at a time.
-                </h2>
-                <div className="space-y-6 text-primary font-body text-lg leading-relaxed">
-                  <p>
-                    I believe travel isn&apos;t about the distance covered, but
-                    the depth of the presence we bring to new environments. My
-                    work focuses on the intersection of human heritage and the
-                    untamed natural world.
-                  </p>
-                  <p>
-                    With a background in editorial design and a passion for slow
-                    journalism, I aim to create a space where you can escape the
-                    rush and truly see the beauty of our planet through a
-                    curated lens.
-                  </p>
-                </div>
-                <div className="mt-10 flex gap-8">
-                  {[
-                    { value: "42+", label: "Countries" },
-                    { value: "12", label: "Exhibitions" },
-                    { value: "8y", label: "Experience" },
-                  ].map((s) => (
-                    <div key={s.label} className="flex flex-col">
-                      <span className="text-3xl font-headline font-bold text-on-background">
-                        {s.value}
-                      </span>
-                      <span className="text-xs font-label text-outline uppercase tracking-wider">
-                        {s.label}
-                      </span>
-                    </div>
-                  ))}
-                </div>
-              </div>
-            </FadeUp>
-          </div>
-        </section>
       </main>
-
       <Footer />
     </>
   );

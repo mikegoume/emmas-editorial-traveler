@@ -1,5 +1,4 @@
 import TopNavBar from "@/components/TopNavBar";
-import { siteConfig } from "@/lib/mockData";
 
 const mapMarkers = [
   { top: "35%", left: "48%", title: "Lisbon, Portugal" },
@@ -33,13 +32,14 @@ export default function AboutPage() {
               <p>
                 Travel is more than a movement between coordinates; it is a
                 discipline of observation. My journey began not with a suitcase,
-                but with a camera and an insatiable curiosity for the quiet corners
-                of the world that rarely make it to the front of a brochure.
+                but with a camera and an insatiable curiosity for the quiet
+                corners of the world that rarely make it to the front of a
+                brochure.
               </p>
               <p>
-                As a former architectural journalist, I spent years documenting how
-                structures define our lives. Now, I apply that same editorial lens
-                to the world at large. Through{" "}
+                As a former architectural journalist, I spent years documenting
+                how structures define our lives. Now, I apply that same
+                editorial lens to the world at large. Through{" "}
                 <span className="italic text-secondary font-semibold">
                   The Editorial Traveler
                 </span>
@@ -48,9 +48,9 @@ export default function AboutPage() {
               </p>
               <p>
                 From the misty peaks of the Alentejo to the hidden tea houses of
-                Kyoto, my goal is to bridge the gap between high-end aesthetics and
-                raw, authentic human connection. We don&apos;t just visit places; we
-                inhabit them, if only for a moment.
+                Kyoto, my goal is to bridge the gap between high-end aesthetics
+                and raw, authentic human connection. We don&apos;t just visit
+                places; we inhabit them, if only for a moment.
               </p>
             </div>
 
@@ -86,8 +86,8 @@ export default function AboutPage() {
               />
               <div className="absolute bottom-0 left-0 right-0 p-8 bg-gradient-to-t from-primary-dim/60 to-transparent">
                 <p className="text-on-primary font-medium italic">
-                  &ldquo;The world is a book, and those who do not travel read only
-                  one page.&rdquo;
+                  &ldquo;The world is a book, and those who do not travel read
+                  only one page.&rdquo;
                 </p>
               </div>
             </div>
@@ -106,9 +106,9 @@ export default function AboutPage() {
                 Footsteps of a wanderer.
               </h2>
               <p className="text-on-surface-variant leading-relaxed">
-                A visual archive of the landscapes that have shaped my perspective.
-                Each marker represents a location where an essay was born or a story
-                was lived.
+                A visual archive of the landscapes that have shaped my
+                perspective. Each marker represents a location where an essay
+                was born or a story was lived.
               </p>
             </div>
             <div className="flex items-center gap-3 bg-surface-container-low px-4 py-2 rounded-full border border-outline-variant/10">
@@ -171,21 +171,25 @@ export default function AboutPage() {
               </h2>
               <p className="text-on-surface-variant mb-8 leading-relaxed font-body">
                 Whether you&apos;re interested in a brand partnership, editorial
-                collaboration, or just want to share a hidden travel gem, I&apos;d
-                love to hear from you.
+                collaboration, or just want to share a hidden travel gem,
+                I&apos;d love to hear from you.
               </p>
               <div className="space-y-4">
                 <div className="flex items-center gap-4 text-on-surface">
                   <span className="material-symbols-outlined text-secondary font-bold">
                     mail
                   </span>
-                  <span className="font-medium">hello@editorialtraveler.com</span>
+                  <span className="font-medium">
+                    hello@editorialtraveler.com
+                  </span>
                 </div>
                 <div className="flex items-center gap-4 text-on-surface">
                   <span className="material-symbols-outlined text-secondary font-bold">
                     location_on
                   </span>
-                  <span className="font-medium">Currently in: Lisbon, Portugal</span>
+                  <span className="font-medium">
+                    Currently in: Lisbon, Portugal
+                  </span>
                 </div>
               </div>
             </div>
@@ -194,7 +198,11 @@ export default function AboutPage() {
               <div className="bg-surface-container-lowest p-8 md:p-12 rounded-lg editorial-shadow border border-white/50">
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
                   {[
-                    { label: "Full Name", type: "text", placeholder: "Julianne Smith" },
+                    {
+                      label: "Full Name",
+                      type: "text",
+                      placeholder: "Julianne Smith",
+                    },
                     {
                       label: "Email Address",
                       type: "email",
@@ -218,19 +226,21 @@ export default function AboutPage() {
                       Inquiry Type
                     </label>
                     <div className="flex flex-wrap gap-3 mt-2">
-                      {["Collaboration", "Speaking", "Say Hello"].map((type, i) => (
-                        <button
-                          key={type}
-                          type="button"
-                          className={`px-5 py-2 rounded-full text-sm font-semibold transition-all ${
-                            i === 0
-                              ? "bg-secondary-container text-on-secondary-container scale-105"
-                              : "bg-surface-container-high text-on-surface-variant hover:bg-secondary-container/50"
-                          }`}
-                        >
-                          {type}
-                        </button>
-                      ))}
+                      {["Collaboration", "Speaking", "Say Hello"].map(
+                        (type, i) => (
+                          <button
+                            key={type}
+                            type="button"
+                            className={`px-5 py-2 rounded-full text-sm font-semibold transition-all ${
+                              i === 0
+                                ? "bg-secondary-container text-on-secondary-container scale-105"
+                                : "bg-surface-container-high text-on-surface-variant hover:bg-secondary-container/50"
+                            }`}
+                          >
+                            {type}
+                          </button>
+                        ),
+                      )}
                     </div>
                   </div>
 
@@ -268,17 +278,20 @@ export default function AboutPage() {
             © 2024 The Editorial Traveler. Curated for the modern wanderer.
           </p>
           <div className="flex gap-8">
-            {["Privacy Policy", "Terms of Service", "Instagram", "Newsletter"].map(
-              (l) => (
-                <a
-                  key={l}
-                  className="font-body text-sm text-zinc-500 hover:text-zinc-900 underline decoration-emerald-800/30 underline-offset-4 opacity-80 hover:opacity-100 transition-opacity"
-                  href="#"
-                >
-                  {l}
-                </a>
-              )
-            )}
+            {[
+              "Privacy Policy",
+              "Terms of Service",
+              "Instagram",
+              "Newsletter",
+            ].map((l) => (
+              <a
+                key={l}
+                className="font-body text-sm text-zinc-500 hover:text-zinc-900 underline decoration-emerald-800/30 underline-offset-4 opacity-80 hover:opacity-100 transition-opacity"
+                href="#"
+              >
+                {l}
+              </a>
+            ))}
           </div>
         </div>
       </footer>

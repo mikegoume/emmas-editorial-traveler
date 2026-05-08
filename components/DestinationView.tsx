@@ -1,3 +1,4 @@
+import DocxViewer from "@/components/DocxViewer";
 import TopNavBar from "@/components/TopNavBar";
 import { getImageUrl, type WPDestination } from "@/lib/graphql";
 import Link from "next/link";
@@ -9,6 +10,12 @@ export default function DestinationView({
 }) {
   const region = destination.regions?.nodes[0];
   const heroImage = getImageUrl(destination);
+
+  console.log("destinationDetails:", destination.destinationDetails);
+  console.log("document field:", destination.destinationDetails?.document);
+  const documentUrl =
+    destination.destinationDetails?.document?.node?.mediaItemUrl;
+  console.log("documentUrl:", documentUrl);
 
   return (
     <>
@@ -45,6 +52,7 @@ export default function DestinationView({
         {/* Body */}
         <section className="py-16 px-6 max-w-7xl mx-auto">
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-16">
+            {/* Sticky Sidebar */}
             <div className="lg:col-span-4 lg:sticky lg:top-32 self-start">
               <span className="font-label text-secondary text-xs font-bold tracking-widest mb-4 block">
                 DESTINATION GUIDE
@@ -52,7 +60,6 @@ export default function DestinationView({
               <h2 className="font-headline text-3xl font-bold text-on-surface mb-6 tracking-tight">
                 About {destination.title}
               </h2>
-
               <div className="space-y-4 mb-8">
                 {region && (
                   <div className="flex items-center gap-3 text-on-surface-variant font-body">
@@ -77,8 +84,15 @@ export default function DestinationView({
                     </span>
                   </div>
                 )}
+                {documentUrl && (
+                  <div className="flex items-center gap-3 text-on-surface-variant font-body">
+                    <span className="material-symbols-outlined text-secondary">
+                      description
+                    </span>
+                    <span>Destination guide attached</span>
+                  </div>
+                )}
               </div>
-
               <Link
                 href="/destinations"
                 className="inline-flex items-center gap-2 text-secondary font-bold font-headline hover:gap-3 transition-all"
@@ -88,14 +102,31 @@ export default function DestinationView({
               </Link>
             </div>
 
-            <div className="lg:col-span-8">
-              <div
-                className="prose prose-lg max-w-none font-body text-on-surface-variant leading-relaxed
-                  prose-headings:font-headline prose-headings:text-on-surface prose-headings:font-bold
-                  prose-a:text-secondary prose-a:no-underline hover:prose-a:underline
-                  prose-img:rounded-lg prose-img:shadow-md"
-                dangerouslySetInnerHTML={{ __html: destination.content }}
-              />
+            {/* Main Content */}
+            <div className="lg:col-span-8 space-y-12">
+              {/* WordPress editor content */}
+              {destination.content && (
+                <div
+                  className="prose prose-lg max-w-none font-body text-on-surface-variant leading-relaxed
+                    prose-headings:font-headline prose-headings:text-on-surface prose-headings:font-bold
+                    prose-a:text-secondary prose-a:no-underline hover:prose-a:underline
+                    prose-img:rounded-lg prose-img:shadow-md"
+                  dangerouslySetInnerHTML={{ __html: destination.content }}
+                />
+              )}
+
+              {/* .docx document — only renders if a file is attached */}
+              {documentUrl && (
+                <div>
+                  <h3 className="font-headline text-2xl font-bold text-on-surface mb-6 flex items-center gap-3">
+                    <span className="material-symbols-outlined text-secondary">
+                      menu_book
+                    </span>
+                    Full Destination Guide
+                  </h3>
+                  <DocxViewer url={documentUrl} />
+                </div>
+              )}
             </div>
           </div>
         </section>

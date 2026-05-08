@@ -15,29 +15,6 @@ export default async function BlogSidebar() {
           <h4 className="font-label text-xs font-extrabold uppercase tracking-widest text-outline-variant mb-8">
             Collections
           </h4>
-          <nav className="space-y-2">
-            {categories.map((cat) => (
-              <Link
-                key={cat.id}
-                href={`/blog/category/${cat.slug}`}
-                className="flex items-center justify-between group p-4 rounded-lg hover:bg-surface-container-low transition-colors"
-              >
-                <span className="font-headline text-lg font-bold">
-                  {cat.name}
-                </span>
-                <span className="flex items-center gap-2">
-                  {cat.count !== null && cat.count > 0 && (
-                    <span className="text-xs text-outline font-label">
-                      {cat.count}
-                    </span>
-                  )}
-                  <span className="material-symbols-outlined text-secondary opacity-0 group-hover:opacity-100 transition-opacity">
-                    arrow_forward
-                  </span>
-                </span>
-              </Link>
-            ))}
-          </nav>
         </div>
       )}
 

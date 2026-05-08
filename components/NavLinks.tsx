@@ -9,6 +9,7 @@ const baseLinks = [
   { label: "Home", href: "/" },
   { label: "Blog", href: "/blog" },
   { label: "About", href: "/about" },
+  { label: "Gallery", href: "/gallery" },
 ];
 
 export default function NavLinks({

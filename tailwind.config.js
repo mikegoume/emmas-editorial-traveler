@@ -76,9 +76,14 @@ module.exports = {
           "0%": { transform: "translateY(-100%)", opacity: "0" },
           "100%": { transform: "translateY(0)", opacity: "1" },
         },
+        marquee: {
+          from: { transform: "translateX(0)" },
+          to: { transform: "translateX(calc(-100% - var(--gap)))" },
+        },
       },
       animation: {
         "slide-down": "slide-down 0.4s cubic-bezier(0, 0, 0.2, 1) both",
+        marquee: "marquee var(--duration) linear infinite",
       },
     },
   },

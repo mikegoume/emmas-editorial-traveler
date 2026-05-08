@@ -64,6 +64,7 @@ export type WPDestination = {
     visitDate: string | null;
     featured: boolean | null;
     heroImage: AcfImage;
+    document: { node: { mediaItemUrl: string } } | null;
   } | null;
 };
 
@@ -140,6 +141,9 @@ const DESTINATION_FIELDS = `
     featured
     heroImage {
       node { sourceUrl altText }
+    }
+    document {
+      node { mediaItemUrl  }
     }
   }
 `;

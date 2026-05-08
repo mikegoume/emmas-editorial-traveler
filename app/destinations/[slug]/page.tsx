@@ -22,8 +22,10 @@ export async function generateMetadata({
 }: {
   params: { slug: string };
 }) {
+  const decodedSlug = decodeURIComponent(params.slug);
+
   // Try destination first
-  const destination = await getDestinationBySlug(params.slug);
+  const destination = await getDestinationBySlug(decodedSlug);
   if (destination) {
     return {
       title: `${destination.title} | The Editorial Traveler`,
@@ -33,7 +35,7 @@ export async function generateMetadata({
     };
   }
   // Then try region
-  const region = await getRegionBySlug(params.slug);
+  const region = await getRegionBySlug(decodedSlug);
   if (region) {
     return {
       title: `${region.name} | The Editorial Traveler`,
@@ -49,14 +51,17 @@ export default async function DestinationOrRegionPage({
 }: {
   params: { slug: string };
 }) {
+  // Decode the slug in case it contains non-ASCII characters (Greek, etc.)
+  const decodedSlug = decodeURIComponent(params.slug);
+
   // Try destination first
-  const destination = await getDestinationBySlug(params.slug);
+  const destination = await getDestinationBySlug(decodedSlug);
   if (destination) {
     return <DestinationView destination={destination} />;
   }
 
   // Fall back to region
-  const region = await getRegionBySlug(params.slug);
+  const region = await getRegionBySlug(decodedSlug);
   if (region) {
     return <RegionView region={region} />;
   }

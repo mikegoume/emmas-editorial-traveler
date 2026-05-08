@@ -22,10 +22,10 @@ export async function generateMetadata({
 }: {
   params: { slug: string };
 }) {
-  const post = await getPostBySlug(params.slug);
+  const decodedSlug = decodeURIComponent(params.slug);
+  const post = await getPostBySlug(decodedSlug);
   if (!post) return {};
 
-  // Try excerpt → fallback to content → fallback to title
   const description =
     stripHtml(post.excerpt).slice(0, 160) ||
     stripHtml(post.content).slice(0, 160) ||
@@ -42,8 +42,10 @@ export default async function BlogPostPage({
 }: {
   params: { slug: string };
 }) {
+  const decodedSlug = decodeURIComponent(params.slug);
+
   const [post, allPosts] = await Promise.all([
-    getPostBySlug(params.slug),
+    getPostBySlug(decodedSlug),
     getAllPosts(),
   ]);
 
