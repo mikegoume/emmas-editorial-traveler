@@ -65,6 +65,8 @@ export type WPDestination = {
     featured: boolean | null;
     heroImage: AcfImage;
     document: { node: { mediaItemUrl: string } } | null;
+    latitude: number | null;
+    longitude: number | null;
   } | null;
 };
 
@@ -145,6 +147,8 @@ const DESTINATION_FIELDS = `
     document {
       node { mediaItemUrl  }
     }
+    latitude
+    longitude
   }
 `;
 
@@ -333,7 +337,7 @@ export async function getAllCategories(): Promise<
     };
   }>(`
     query GetAllCategories {
-      categories(first: 50, where: { hideEmpty: true }) {
+      categories(first: 50, where: { hideEmpty: false }) {
         nodes { id name slug count }
       }
     }

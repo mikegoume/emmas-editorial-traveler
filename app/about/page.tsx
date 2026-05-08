@@ -1,19 +1,13 @@
+import Footer from "@/components/Footer";
 import TopNavBar from "@/components/TopNavBar";
+import WorldMapWrapper from "@/components/WorldMapWrapper";
+import { getAllDestinations } from "@/lib/graphql";
 
-const mapMarkers = [
-  { top: "35%", left: "48%", title: "Lisbon, Portugal" },
-  { top: "28%", left: "51%", title: "Paris, France" },
-  { top: "45%", left: "53%", title: "Marrakech, Morocco" },
-  { top: "38%", left: "81%", title: "Kyoto, Japan" },
-  { top: "32%", left: "25%", title: "New York, USA" },
-  { top: "65%", left: "28%", title: "Patagonia, Chile" },
-  { top: "52%", left: "44%", title: "Cape Verde" },
-  { top: "42%", left: "74%", title: "Hanoi, Vietnam" },
-  { top: "82%", left: "85%", title: "Melbourne, Australia" },
-  { top: "22%", left: "65%", title: "Tbilisi, Georgia" },
-];
+export const revalidate = 60;
 
-export default function AboutPage() {
+export default async function AboutPage() {
+  const destinations = await getAllDestinations();
+
   return (
     <>
       <TopNavBar />
@@ -95,7 +89,7 @@ export default function AboutPage() {
           </div>
         </section>
 
-        {/* Interactive Map */}
+        {/* ── Map Section — REPLACE the old SVG map with this ── */}
         <section className="max-w-7xl mx-auto px-8 my-32">
           <div className="mb-12 flex flex-col md:flex-row md:items-end justify-between gap-6">
             <div className="max-w-xl">
@@ -107,50 +101,30 @@ export default function AboutPage() {
               </h2>
               <p className="text-on-surface-variant leading-relaxed">
                 A visual archive of the landscapes that have shaped my
-                perspective. Each marker represents a location where an essay
-                was born or a story was lived.
+                perspective. Click any marker to explore a destination.
               </p>
             </div>
             <div className="flex items-center gap-3 bg-surface-container-low px-4 py-2 rounded-full border border-outline-variant/10">
               <div className="w-2 h-2 rounded-full bg-secondary" />
               <span className="text-xs font-bold uppercase tracking-widest font-label text-on-surface-variant">
+                {
+                  destinations.filter(
+                    (d) =>
+                      d.destinationDetails?.latitude &&
+                      d.destinationDetails?.longitude,
+                  ).length
+                }{" "}
                 Documented Destinations
               </span>
             </div>
           </div>
 
-          <div className="relative w-full aspect-[21/9] bg-surface-container-low rounded-lg overflow-hidden shadow-inner border border-outline-variant/10 group">
-            {/* SVG continental outlines */}
-            <svg
-              className="absolute inset-0 w-full h-full text-outline-variant/30"
-              fill="currentColor"
-              viewBox="0 0 1000 450"
-            >
-              <path d="M150,120 Q180,80 220,100 T280,140 T320,100 T380,120 T420,180 L400,250 Q350,300 280,280 T200,250 T150,120 Z" />
-              <path d="M250,280 Q300,320 280,380 T240,430 T180,380 T220,320 Z" />
-              <path d="M450,150 Q500,100 550,130 T600,180 T580,250 T520,300 T450,250 Z" />
-              <path d="M600,130 Q700,80 850,120 T900,200 T800,300 T650,250 Z" />
-              <path d="M780,320 Q850,320 880,380 T800,420 T750,350 Z" />
-            </svg>
-
-            {/* Map markers */}
-            {mapMarkers.map((marker) => (
-              <div
-                key={marker.title}
-                title={marker.title}
-                className="absolute w-3 h-3 bg-secondary rounded-full border-2 border-white shadow-sm cursor-pointer transition-all duration-300 hover:scale-150 hover:bg-emerald-800 hover:ring-4 hover:ring-emerald-900/10"
-                style={{ top: marker.top, left: marker.left }}
-              />
-            ))}
-
-            <div className="absolute inset-0 bg-secondary/5 opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none" />
-          </div>
+          {/* Real interactive map */}
+          <WorldMapWrapper destinations={destinations} />
 
           <div className="mt-4 flex items-center justify-center gap-2 text-on-surface-variant/60 italic text-sm">
             <span className="material-symbols-outlined text-sm">info</span>
-            <span>
-              Hover over markers to view locations from past editorial features.
-            </span>
+            <span>Click markers to explore destinations. Scroll to zoom.</span>
           </div>
         </section>
 
@@ -214,7 +188,7 @@ export default function AboutPage() {
                         {field.label}
                       </label>
                       <input
-                        className="w-full bg-surface-container-low border-0 border-b border-outline-variant/20 focus:ring-0 focus:border-secondary transition-all py-3 px-0 text-on-surface placeholder:text-outline-variant/50"
+                        className="w-full bg-surface-container-low border-0 border-b border-outline-variant/20 focus:ring-0 focus:border-secondary transition-all py-3 px-4 text-on-surface placeholder:text-outline-variant/50"
                         placeholder={field.placeholder}
                         type={field.type}
                       />
@@ -249,7 +223,7 @@ export default function AboutPage() {
                       Your Message
                     </label>
                     <textarea
-                      className="w-full bg-surface-container-low border-0 border-b border-outline-variant/20 focus:ring-0 focus:border-secondary transition-all py-3 px-0 text-on-surface resize-none placeholder:text-outline-variant/50"
+                      className="w-full bg-surface-container-low border-0 border-b border-outline-variant/20 focus:ring-0 focus:border-secondary transition-all py-3 px-4 text-on-surface resize-none placeholder:text-outline-variant/50"
                       placeholder="Tell me about your project or destination..."
                       rows={4}
                     />
@@ -271,30 +245,7 @@ export default function AboutPage() {
         </section>
       </main>
 
-      {/* Footer */}
-      <footer className="w-full border-t border-zinc-100 pt-12 pb-8 mt-24 bg-zinc-50">
-        <div className="flex flex-col md:flex-row justify-between items-center px-8 max-w-7xl mx-auto gap-4">
-          <p className="font-body text-sm tracking-wide text-zinc-400">
-            © 2024 The Editorial Traveler. Curated for the modern wanderer.
-          </p>
-          <div className="flex gap-8">
-            {[
-              "Privacy Policy",
-              "Terms of Service",
-              "Instagram",
-              "Newsletter",
-            ].map((l) => (
-              <a
-                key={l}
-                className="font-body text-sm text-zinc-500 hover:text-zinc-900 underline decoration-emerald-800/30 underline-offset-4 opacity-80 hover:opacity-100 transition-opacity"
-                href="#"
-              >
-                {l}
-              </a>
-            ))}
-          </div>
-        </div>
-      </footer>
+      <Footer />
     </>
   );
 }

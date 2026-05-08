@@ -1,3 +1,4 @@
+import Footer from "@/components/Footer";
 import TopNavBar from "@/components/TopNavBar";
 import {
   formatDate,
@@ -229,6 +230,7 @@ export default async function BlogPostPage({
           </div>
         </section>
       </main>
+      <Footer />
     </>
   );
 }

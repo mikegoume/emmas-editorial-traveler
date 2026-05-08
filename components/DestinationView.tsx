@@ -1,4 +1,5 @@
 import DocxViewer from "@/components/DocxViewer";
+import Footer from "@/components/Footer";
 import TopNavBar from "@/components/TopNavBar";
 import { getImageUrl, type WPDestination } from "@/lib/graphql";
 import Link from "next/link";
@@ -131,6 +132,7 @@ export default function DestinationView({
           </div>
         </section>
       </main>
+      <Footer />
     </>
   );
 }

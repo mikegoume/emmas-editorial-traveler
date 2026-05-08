@@ -1,3 +1,4 @@
+import Footer from "@/components/Footer";
 import TopNavBar from "@/components/TopNavBar";
 import {
   getAllDestinations,
@@ -190,63 +191,7 @@ export default async function DestinationsPage() {
         </section>
       </main>
 
-      {/* Footer */}
-      <footer className="bg-zinc-50 w-full rounded-t-[32px] mt-12">
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-12 px-12 py-20 max-w-7xl mx-auto font-body text-sm tracking-wide">
-          <div>
-            <h3 className="text-lg font-bold text-zinc-900 mb-6 font-headline">
-              The Editorial Traveler
-            </h3>
-            <p className="text-zinc-500 leading-relaxed">
-              Crafting immersive digital journeys for the modern connoisseur of
-              world travel.
-            </p>
-          </div>
-          <div>
-            <h4 className="text-emerald-900 font-bold mb-6">Regions</h4>
-            <ul className="space-y-4 text-zinc-500">
-              {regions.slice(0, 5).map((r) => (
-                <li key={r.id}>
-                  <Link
-                    href={`/destinations/${r.slug}`}
-                    className="hover:text-emerald-600 transition-colors"
-                  >
-                    {r.name}
-                  </Link>
-                </li>
-              ))}
-              {regions.length === 0 && (
-                <li className="italic text-zinc-400">No regions yet</li>
-              )}
-            </ul>
-          </div>
-          <div>
-            <h4 className="text-emerald-900 font-bold mb-6">Navigate</h4>
-            <ul className="space-y-4 text-zinc-500">
-              {[
-                { label: "Home", href: "/" },
-                { label: "Blog", href: "/blog" },
-                { label: "About", href: "/about" },
-              ].map((l) => (
-                <li key={l.label}>
-                  <Link
-                    href={l.href}
-                    className="hover:text-emerald-600 transition-colors"
-                  >
-                    {l.label}
-                  </Link>
-                </li>
-              ))}
-            </ul>
-          </div>
-        </div>
-        <div className="max-w-7xl mx-auto px-12 pb-12 border-t border-zinc-200 pt-8 flex justify-between items-center text-xs text-zinc-400">
-          <span>© 2024 The Editorial Traveler. All rights reserved.</span>
-          <span className="text-emerald-700 font-semibold">
-            Curated with Intention.
-          </span>
-        </div>
-      </footer>
+      <Footer />
     </>
   );
 }

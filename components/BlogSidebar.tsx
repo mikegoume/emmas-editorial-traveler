@@ -18,30 +18,6 @@ export default async function BlogSidebar() {
         </div>
       )}
 
-      {/* Newsletter */}
-      <div className="bg-primary/5 p-10 rounded-lg editorial-shadow">
-        <h4 className="font-headline text-2xl font-bold mb-4">
-          The Monday Postcard
-        </h4>
-        <p className="font-body text-sm text-on-surface-variant mb-8 leading-relaxed">
-          Join 15,000+ wanderers who receive our weekly curated dispatch of slow
-          travel stories, exclusive guides, and visual inspiration.
-        </p>
-        <div className="space-y-4">
-          <input
-            className="w-full bg-surface-container-lowest border-none rounded-full px-6 py-4 text-sm focus:ring-2 focus:ring-secondary/20 transition-all shadow-sm"
-            placeholder="Email address"
-            type="email"
-          />
-          <button className="w-full bg-secondary text-on-secondary font-bold py-4 rounded-full shadow-lg transition-all hover:bg-secondary-dim">
-            Join the Circle
-          </button>
-        </div>
-        <p className="text-[10px] text-outline mt-6 text-center italic">
-          No spam. Only inspiration. Unsubscribe anytime.
-        </p>
-      </div>
-
       {/* Trending Tags */}
       {tags.length > 0 && (
         <div>

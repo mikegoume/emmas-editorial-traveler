@@ -1,4 +1,4 @@
-import BlogSidebar from "@/components/BlogSidebar";
+import Footer from "@/components/Footer";
 import PostListView from "@/components/PostListView";
 import TopNavBar from "@/components/TopNavBar";
 import { getTagBySlug } from "@/lib/graphql";
@@ -38,10 +38,10 @@ export default async function TagPage({
           title={`#${tag.name}`}
           description={tag.description}
           posts={tag.posts.nodes}
-          sidebar={<BlogSidebar />}
           emptyMessage={`No posts tagged with "${tag.name}" yet.`}
         />
       </main>
+      <Footer />
     </>
   );
 }
