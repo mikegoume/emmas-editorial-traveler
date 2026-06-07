@@ -2,20 +2,21 @@ import Footer from "@/components/Footer";
 import TopNavBar from "@/components/TopNavBar";
 import {
   formatDate,
+  getAllPostSlugs,
   getAllPosts,
   getImageUrl,
   getPostBySlug,
   stripHtml,
-  type WPPost,
-} from "@/lib/graphql";
+} from "@/lib/db";
+import type { Post } from "@/lib/types";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 
 export const revalidate = 60;
 
 export async function generateStaticParams() {
-  const posts = await getAllPosts();
-  return posts.map((p) => ({ slug: p.slug }));
+  const slugs = await getAllPostSlugs();
+  return slugs.map((slug) => ({ slug }));
 }
 
 export async function generateMetadata({
@@ -52,13 +53,12 @@ export default async function BlogPostPage({
 
   if (!post) notFound();
 
-  const category = post.categories.nodes[0];
-  // Related: prefer same category, otherwise most recent
+  const category = post.categories?.[0];
   const related = allPosts
     .filter((p) => p.id !== post.id)
     .filter((p) =>
       category
-        ? p.categories.nodes.some((c) => c.name === category.name)
+        ? p.categories?.some((c) => c.name === category.name)
         : true,
     )
     .slice(0, 3);
@@ -70,7 +70,7 @@ export default async function BlogPostPage({
         {/* ── Hero ───────────────────────────────────────────────────── */}
         <section className="relative h-[600px] md:h-[720px] w-full overflow-hidden">
           <img
-            alt={post.featuredImage?.node.altText ?? post.title}
+            alt={post.featured_image_alt || post.title}
             className="absolute inset-0 w-full h-full object-cover"
             src={getImageUrl(post)}
           />
@@ -86,9 +86,9 @@ export default async function BlogPostPage({
                   {category.name}
                 </Link>
               )}
-              {post.blogPostDetails?.readTime && (
+              {post.read_time && (
                 <span className="text-white/80 text-xs font-label uppercase tracking-widest">
-                  {post.blogPostDetails.readTime}
+                  {post.read_time}
                 </span>
               )}
             </div>
@@ -108,14 +108,12 @@ export default async function BlogPostPage({
 
         {/* ── Article Body ───────────────────────────────────────────── */}
         <article className="max-w-4xl mx-auto px-8 py-12">
-          {/* Lede / excerpt */}
           {post.excerpt && (
             <p className="text-2xl text-on-surface font-body leading-relaxed mb-12 pb-12 border-b border-outline-variant/20 italic font-light">
               {stripHtml(post.excerpt)}
             </p>
           )}
 
-          {/* Article content from WordPress */}
           <div
             className="prose prose-lg max-w-none font-body text-on-surface-variant leading-relaxed
               prose-headings:font-headline prose-headings:text-on-surface prose-headings:font-bold prose-headings:tracking-tight
@@ -128,10 +126,9 @@ export default async function BlogPostPage({
               prose-strong:text-on-surface prose-strong:font-semibold
               prose-ul:my-6 prose-ol:my-6
               prose-li:my-2 prose-li:text-lg"
-            dangerouslySetInnerHTML={{ __html: post.content }}
+            dangerouslySetInnerHTML={{ __html: post.content ?? "" }}
           />
 
-          {/* Share + meta footer */}
           <div className="mt-16 pt-12 border-t border-outline-variant/20 flex flex-col md:flex-row md:items-center md:justify-between gap-6">
             <div className="text-sm text-outline font-label uppercase tracking-wider">
               Published {formatDate(post.date)}
@@ -170,7 +167,7 @@ export default async function BlogPostPage({
                 </h2>
               </div>
               <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-                {related.map((rel: WPPost) => (
+                {related.map((rel: Post) => (
                   <Link
                     key={rel.id}
                     href={`/blog/${rel.slug}`}
@@ -183,9 +180,9 @@ export default async function BlogPostPage({
                         src={getImageUrl(rel)}
                       />
                     </div>
-                    {rel.categories.nodes[0] && (
+                    {rel.categories?.[0] && (
                       <span className="text-[10px] font-label font-bold text-secondary uppercase tracking-widest mb-2 block">
-                        {rel.categories.nodes[0].name}
+                        {rel.categories[0].name}
                       </span>
                     )}
                     <h3 className="font-headline text-xl font-bold leading-tight group-hover:text-secondary transition-colors mb-3">
@@ -196,10 +193,10 @@ export default async function BlogPostPage({
                     </p>
                     <div className="flex items-center text-xs font-label text-outline uppercase tracking-wider">
                       <span>{formatDate(rel.date)}</span>
-                      {rel.blogPostDetails?.readTime && (
+                      {rel.read_time && (
                         <>
                           <span className="mx-2">•</span>
-                          <span>{rel.blogPostDetails.readTime}</span>
+                          <span>{rel.read_time}</span>
                         </>
                       )}
                     </div>

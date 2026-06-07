@@ -1,6 +1,6 @@
 "use client";
 
-import type { WPDestination } from "@/lib/graphql";
+import type { Destination } from "@/lib/types";
 import L from "leaflet";
 import "leaflet/dist/leaflet.css";
 import { useEffect } from "react";
@@ -22,27 +22,19 @@ const createCustomIcon = () =>
     popupAnchor: [0, -10],
   });
 
-function FitBounds({ destinations }: { destinations: WPDestination[] }) {
+function FitBounds({ destinations }: { destinations: Destination[] }) {
   const map = useMap();
   useEffect(() => {
-    const valid = destinations.filter(
-      (d) => d.destinationDetails?.latitude && d.destinationDetails?.longitude,
-    );
+    const valid = destinations.filter((d) => d.latitude && d.longitude);
     if (valid.length === 0) return;
     if (valid.length === 1) {
-      map.setView(
-        [
-          valid[0].destinationDetails!.latitude!,
-          valid[0].destinationDetails!.longitude!,
-        ],
-        6,
-      );
+      map.setView([valid[0].latitude!, valid[0].longitude!], 6);
       return;
     }
-    const bounds = valid.map((d) => [
-      d.destinationDetails!.latitude!,
-      d.destinationDetails!.longitude!,
-    ]) as [number, number][];
+    const bounds = valid.map((d) => [d.latitude!, d.longitude!]) as [
+      number,
+      number,
+    ][];
     map.fitBounds(bounds, { padding: [60, 60] });
   }, [map, destinations]);
   return null;
@@ -51,11 +43,9 @@ function FitBounds({ destinations }: { destinations: WPDestination[] }) {
 export default function WorldMap({
   destinations,
 }: {
-  destinations: WPDestination[];
+  destinations: Destination[];
 }) {
-  const validDestinations = destinations.filter(
-    (d) => d.destinationDetails?.latitude && d.destinationDetails?.longitude,
-  );
+  const validDestinations = destinations.filter((d) => d.latitude && d.longitude);
 
   if (validDestinations.length === 0) {
     return (
@@ -64,8 +54,8 @@ export default function WorldMap({
         className="w-full bg-surface-container-low rounded-lg flex items-center justify-center border border-outline-variant/10"
       >
         <p className="text-outline font-body italic text-sm">
-          No destinations with coordinates yet. Add latitude & longitude in
-          WordPress.
+          No destinations with coordinates yet. Add latitude &amp; longitude in
+          the admin.
         </p>
       </div>
     );
@@ -93,17 +83,12 @@ export default function WorldMap({
         <FitBounds destinations={validDestinations} />
 
         {validDestinations.map((dest) => {
-          const lat = dest.destinationDetails!.latitude!;
-          const lng = dest.destinationDetails!.longitude!;
-          const region = dest.regions?.nodes[0];
-          const image =
-            dest.destinationDetails?.heroImage?.node?.sourceUrl ??
-            dest.featuredImage?.node?.sourceUrl;
+          const image = dest.hero_image_url ?? dest.featured_image_url;
 
           return (
             <Marker
               key={dest.id}
-              position={[lat, lng]}
+              position={[dest.latitude!, dest.longitude!]}
               icon={createCustomIcon()}
             >
               <Popup maxWidth={220} minWidth={220}>
@@ -122,7 +107,7 @@ export default function WorldMap({
                     />
                   )}
                   <div style={{ padding: "0 4px 4px" }}>
-                    {region && (
+                    {dest.region && (
                       <span
                         style={{
                           fontSize: "10px",
@@ -132,7 +117,7 @@ export default function WorldMap({
                           color: "#3d6660",
                         }}
                       >
-                        {region.name}
+                        {dest.region.name}
                       </span>
                     )}
                     <h3
@@ -146,7 +131,7 @@ export default function WorldMap({
                     >
                       {dest.title}
                     </h3>
-                    {dest.destinationDetails?.excerpt && (
+                    {dest.excerpt && (
                       <p
                         style={{
                           fontSize: "12px",
@@ -159,7 +144,7 @@ export default function WorldMap({
                           overflow: "hidden",
                         }}
                       >
-                        {dest.destinationDetails.excerpt}
+                        {dest.excerpt}
                       </p>
                     )}
                     <a

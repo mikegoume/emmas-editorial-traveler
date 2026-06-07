@@ -1,22 +1,18 @@
 import DocxViewer from "@/components/DocxViewer";
 import Footer from "@/components/Footer";
 import TopNavBar from "@/components/TopNavBar";
-import { getImageUrl, type WPDestination } from "@/lib/graphql";
+import { getImageUrl } from "@/lib/db";
+import type { Destination } from "@/lib/types";
 import Link from "next/link";
 
 export default function DestinationView({
   destination,
 }: {
-  destination: WPDestination;
+  destination: Destination;
 }) {
-  const region = destination.regions?.nodes[0];
+  const region = destination.region;
   const heroImage = getImageUrl(destination);
-
-  console.log("destinationDetails:", destination.destinationDetails);
-  console.log("document field:", destination.destinationDetails?.document);
-  const documentUrl =
-    destination.destinationDetails?.document?.node?.mediaItemUrl;
-  console.log("documentUrl:", documentUrl);
+  const documentUrl = destination.document_url;
 
   return (
     <>
@@ -25,7 +21,7 @@ export default function DestinationView({
         {/* Hero */}
         <section className="relative h-[870px] w-full overflow-hidden">
           <img
-            alt={destination.featuredImage?.node.altText ?? destination.title}
+            alt={destination.featured_image_alt || destination.title}
             className="absolute inset-0 w-full h-full object-cover"
             src={heroImage}
           />
@@ -42,9 +38,9 @@ export default function DestinationView({
             <h1 className="font-headline font-extrabold text-white text-5xl md:text-8xl tracking-tighter leading-none mb-6">
               {destination.title}
             </h1>
-            {destination.destinationDetails?.excerpt && (
+            {destination.excerpt && (
               <p className="font-body text-white/90 text-lg md:text-xl max-w-2xl leading-relaxed">
-                {destination.destinationDetails.excerpt}
+                {destination.excerpt}
               </p>
             )}
           </div>
@@ -75,14 +71,12 @@ export default function DestinationView({
                     </Link>
                   </div>
                 )}
-                {destination.destinationDetails?.visitDate && (
+                {destination.visit_date && (
                   <div className="flex items-center gap-3 text-on-surface-variant font-body">
                     <span className="material-symbols-outlined text-secondary">
                       calendar_today
                     </span>
-                    <span>
-                      Visited: {destination.destinationDetails.visitDate}
-                    </span>
+                    <span>Visited: {destination.visit_date}</span>
                   </div>
                 )}
                 {documentUrl && (
@@ -105,7 +99,6 @@ export default function DestinationView({
 
             {/* Main Content */}
             <div className="lg:col-span-8 space-y-12">
-              {/* WordPress editor content */}
               {destination.content && (
                 <div
                   className="prose prose-lg max-w-none font-body text-on-surface-variant leading-relaxed
@@ -116,7 +109,6 @@ export default function DestinationView({
                 />
               )}
 
-              {/* .docx document — only renders if a file is attached */}
               {documentUrl && (
                 <div>
                   <h3 className="font-headline text-2xl font-bold text-on-surface mb-6 flex items-center gap-3">

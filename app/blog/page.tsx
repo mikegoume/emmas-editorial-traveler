@@ -2,7 +2,7 @@ import CategoryFilter from "@/components/CategoryFilter";
 import Footer from "@/components/Footer";
 import PostListView from "@/components/PostListView";
 import TopNavBar from "@/components/TopNavBar";
-import { getAllCategories, getAllPosts } from "@/lib/graphql";
+import { getAllCategories, getAllPosts } from "@/lib/db";
 
 export const revalidate = 60;
 
@@ -11,8 +11,7 @@ export default async function BlogPage() {
     getAllPosts(),
     getAllCategories(),
   ]);
-  const featuredPost =
-    posts.find((p) => p.blogPostDetails?.featured) ?? posts[0] ?? null;
+  const featuredPost = posts.find((p) => p.featured) ?? posts[0] ?? null;
   const feedPosts = posts.filter((p) => p.id !== featuredPost?.id);
 
   return (

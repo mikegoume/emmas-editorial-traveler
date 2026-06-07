@@ -1,6 +1,6 @@
 "use client";
 
-import type { WPDestination } from "@/lib/graphql";
+import type { Destination } from "@/lib/types";
 import dynamic from "next/dynamic";
 
 const WorldMap = dynamic(() => import("./WorldMap"), {
@@ -20,7 +20,7 @@ const WorldMap = dynamic(() => import("./WorldMap"), {
 export default function WorldMapWrapper({
   destinations,
 }: {
-  destinations: WPDestination[];
+  destinations: Destination[];
 }) {
   return <WorldMap destinations={destinations} />;
 }

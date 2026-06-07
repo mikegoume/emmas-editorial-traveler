@@ -1,10 +1,17 @@
 import TopNavBar from "@/components/TopNavBar";
-import { getImageUrl, type WPDestination, type WPRegion } from "@/lib/graphql";
+import { getImageUrl } from "@/lib/db";
+import type { RegionWithFullDestinations } from "@/lib/db";
+import type { Destination } from "@/lib/types";
 import Link from "next/link";
 
-export default function RegionView({ region }: { region: WPRegion }) {
-  const destinations = region.destinations.nodes;
+export default function RegionView({
+  region,
+}: {
+  region: RegionWithFullDestinations;
+}) {
+  const destinations = region.destinations;
   const [hero, ...rest] = destinations;
+  void rest;
 
   return (
     <>
@@ -54,7 +61,7 @@ export default function RegionView({ region }: { region: WPRegion }) {
             </p>
           ) : (
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-              {destinations.map((dest: WPDestination, i: number) => (
+              {destinations.map((dest: Destination, i: number) => (
                 <Link
                   key={dest.id}
                   href={`/destinations/${dest.slug}`}
@@ -72,12 +79,12 @@ export default function RegionView({ region }: { region: WPRegion }) {
                     <h3 className="text-2xl font-headline font-bold text-white mb-2">
                       {dest.title}
                     </h3>
-                    {dest.destinationDetails?.visitDate && (
+                    {dest.visit_date && (
                       <div className="flex items-center text-white/60 text-sm gap-2">
                         <span className="material-symbols-outlined text-base">
                           calendar_today
                         </span>
-                        <span>{dest.destinationDetails.visitDate}</span>
+                        <span>{dest.visit_date}</span>
                       </div>
                     )}
                   </div>

@@ -1,7 +1,7 @@
 import Footer from "@/components/Footer";
 import PostListView from "@/components/PostListView";
 import TopNavBar from "@/components/TopNavBar";
-import { getTagBySlug } from "@/lib/graphql";
+import { getTagBySlug } from "@/lib/db";
 import { notFound } from "next/navigation";
 
 export const revalidate = 60;
@@ -37,7 +37,7 @@ export default async function TagPage({
           eyebrow="Tag"
           title={`#${tag.name}`}
           description={tag.description}
-          posts={tag.posts.nodes}
+          posts={tag.posts}
           emptyMessage={`No posts tagged with "${tag.name}" yet.`}
         />
       </main>

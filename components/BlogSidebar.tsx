@@ -1,4 +1,4 @@
-import { getAllCategories, getTrendingTags } from "@/lib/graphql";
+import { getAllCategories, getTrendingTags } from "@/lib/db";
 import Link from "next/link";
 
 export default async function BlogSidebar() {

@@ -1,4 +1,4 @@
-import { getRegionsWithDestinations } from "@/lib/graphql";
+import { getRegionsWithDestinations } from "@/lib/db";
 import Link from "next/link";
 import NavLinks from "./NavLinks";
 

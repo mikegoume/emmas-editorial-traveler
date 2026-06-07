@@ -1,7 +1,7 @@
 import Footer from "@/components/Footer";
 import TopNavBar from "@/components/TopNavBar";
 import WorldMapWrapper from "@/components/WorldMapWrapper";
-import { getAllDestinations } from "@/lib/graphql";
+import { getAllDestinations } from "@/lib/db";
 
 export const revalidate = 60;
 
@@ -108,11 +108,7 @@ export default async function AboutPage() {
               <div className="w-2 h-2 rounded-full bg-secondary" />
               <span className="text-xs font-bold uppercase tracking-widest font-label text-on-surface-variant">
                 {
-                  destinations.filter(
-                    (d) =>
-                      d.destinationDetails?.latitude &&
-                      d.destinationDetails?.longitude,
-                  ).length
+                  destinations.filter((d) => d.latitude && d.longitude).length
                 }{" "}
                 Documented Destinations
               </span>

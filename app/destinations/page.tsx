@@ -4,8 +4,8 @@ import {
   getAllDestinations,
   getImageUrl,
   getRegionsWithDestinations,
-  type WPDestination,
-} from "@/lib/graphql";
+} from "@/lib/db";
+import type { Destination } from "@/lib/types";
 import Link from "next/link";
 
 export const revalidate = 60;
@@ -16,9 +16,8 @@ export default async function DestinationsPage() {
     getRegionsWithDestinations(),
   ]);
 
-  // Pick a hero image — use the first featured destination, or just the first one
   const heroDestination =
-    destinations.find((d) => d.destinationDetails?.featured) ?? destinations[0];
+    destinations.find((d) => d.featured) ?? destinations[0];
 
   return (
     <>
@@ -81,8 +80,8 @@ export default async function DestinationsPage() {
                     {region.name}
                   </h3>
                   <p className="text-sm text-outline group-hover:text-on-secondary-container/70 font-label">
-                    {region.destinations.nodes.length}{" "}
-                    {region.destinations.nodes.length === 1
+                    {region.destinations.length}{" "}
+                    {region.destinations.length === 1
                       ? "destination"
                       : "destinations"}
                   </p>
@@ -117,13 +116,13 @@ export default async function DestinationsPage() {
                 No destinations published yet.
               </p>
               <p className="text-sm text-outline-variant font-label">
-                Add some in WordPress → Destinations → Add New.
+                Add some in the admin → Destinations → New Destination.
               </p>
             </div>
           ) : (
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-              {destinations.map((dest: WPDestination, i: number) => {
-                const region = dest.regions?.nodes[0];
+              {destinations.map((dest: Destination, i: number) => {
+                const region = dest.region;
                 return (
                   <Link
                     key={dest.id}
@@ -135,7 +134,7 @@ export default async function DestinationsPage() {
                     <img
                       className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700"
                       src={getImageUrl(dest)}
-                      alt={dest.featuredImage?.node.altText ?? dest.title}
+                      alt={dest.featured_image_alt || dest.title}
                     />
                     <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent opacity-60" />
                     <div className="absolute bottom-0 left-0 p-8 w-full transform translate-y-2 group-hover:translate-y-0 transition-transform duration-500">
@@ -147,12 +146,12 @@ export default async function DestinationsPage() {
                       <h3 className="text-2xl font-headline font-bold text-white mb-2">
                         {dest.title}
                       </h3>
-                      {dest.destinationDetails?.visitDate && (
+                      {dest.visit_date && (
                         <div className="flex items-center text-white/60 text-sm gap-2">
                           <span className="material-symbols-outlined text-base">
                             calendar_today
                           </span>
-                          <span>{dest.destinationDetails.visitDate}</span>
+                          <span>{dest.visit_date}</span>
                         </div>
                       )}
                     </div>

@@ -1,34 +1,11 @@
-﻿import TopNavBar from "@/components/TopNavBar";
+import TopNavBar from "@/components/TopNavBar";
 import InteractiveImageBentoGallery from "@/components/ui/bento-gallery";
-import { getAllDestinations, WPDestination } from "@/lib/graphql";
+import { getAllDestinations } from "@/lib/db";
 import { featuredDestinations } from "@/lib/mockData";
 
 export const revalidate = 60;
 
-function mockToDestination(
-  mock: (typeof featuredDestinations)[number],
-): WPDestination {
-  return {
-    id: mock.slug,
-    title: mock.title,
-    slug: mock.slug,
-    content: "",
-    featuredImage: {
-      node: { sourceUrl: mock.image, altText: mock.imageAlt },
-    },
-    regions: {
-      nodes: [{ name: mock.region, slug: mock.region.toLowerCase() }],
-    },
-    destinationDetails: {
-      excerpt: null,
-      visitDate: mock.date ?? null,
-      featured: true,
-      heroImage: null,
-    },
-  };
-}
-
-const bentoItems = [
+const fallbackBentoItems = [
   {
     id: 1,
     title: featuredDestinations[0].title,
@@ -73,18 +50,37 @@ const bentoItems = [
   },
 ];
 
+const SPANS = [
+  "md:col-span-2 md:row-span-2",
+  "md:row-span-1",
+  "md:row-span-1",
+  "md:row-span-2",
+  "md:row-span-1",
+  "md:col-span-2 md:row-span-1",
+];
+
 export default async function GalleryPage() {
-  let destinations: WPDestination[] = [];
+  let destinations: Awaited<ReturnType<typeof getAllDestinations>> = [];
 
   try {
     destinations = await getAllDestinations();
   } catch {
-    // GraphQL unavailable — fall through to mock data
+    // Supabase unavailable — fall through to mock data
   }
 
-  if (destinations.length === 0) {
-    destinations = featuredDestinations.map(mockToDestination);
-  }
+  const bentoItems =
+    destinations.length > 0
+      ? destinations.slice(0, 6).map((dest, i) => ({
+          id: i + 1,
+          title: dest.title,
+          desc: dest.excerpt ?? "",
+          url:
+            dest.hero_image_url ??
+            dest.featured_image_url ??
+            `https://picsum.photos/seed/${dest.slug}/800/600`,
+          span: SPANS[i % SPANS.length],
+        }))
+      : fallbackBentoItems;
 
   return (
     <>

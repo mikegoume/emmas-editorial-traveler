@@ -7,7 +7,7 @@ type Category = {
   id: string;
   name: string;
   slug: string;
-  count: number | null;
+  post_count?: number;
 };
 
 export default function CategoryFilter({

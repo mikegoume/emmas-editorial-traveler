@@ -1,6 +1,7 @@
 ﻿"use client";
 
-import { getImageUrl, WPDestination } from "@/lib/graphql";
+import { getImageUrl } from "@/lib/db";
+import type { Destination } from "@/lib/types";
 import { cn } from "@/lib/utils";
 import {
   AnimatePresence,
@@ -40,14 +41,14 @@ const TILES_Y = 9;
 
 interface TileEntry {
   key: string;
-  dest: WPDestination;
+  dest: Destination;
   x: number;
   y: number;
   w: number;
   h: number;
 }
 
-function buildTiles(destinations: WPDestination[]): {
+function buildTiles(destinations: Destination[]): {
   tiles: TileEntry[];
   totalW: number;
   totalH: number;
@@ -77,7 +78,7 @@ function buildTiles(destinations: WPDestination[]): {
   return { tiles, totalW, totalH };
 }
 
-function getCarouselImages(dest: WPDestination): string[] {
+function getCarouselImages(dest: Destination): string[] {
   return [
     getImageUrl(dest),
     `https://picsum.photos/seed/${dest.slug}-a/1200/800`,
@@ -88,13 +89,13 @@ function getCarouselImages(dest: WPDestination): string[] {
 }
 
 interface DetailOverlayProps {
-  dest: WPDestination;
+  dest: Destination;
   onClose: () => void;
 }
 
 function DetailOverlay({ dest, onClose }: DetailOverlayProps) {
-  const region = dest.regions?.nodes?.[0];
-  const excerpt = dest.destinationDetails?.excerpt ?? "";
+  const region = dest.region;
+  const excerpt = dest.excerpt ?? "";
   const images = getCarouselImages(dest);
 
   const [activeIdx, setActiveIdx] = useState(0);
@@ -231,13 +232,13 @@ function DetailOverlay({ dest, onClose }: DetailOverlayProps) {
 }
 
 interface InfiniteGalleryProps {
-  destinations: WPDestination[];
+  destinations: Destination[];
   belowSectionId?: string;
 }
 
 export function InfiniteGallery({ destinations, belowSectionId }: InfiniteGalleryProps) {
   const [isPanning, setIsPanning] = useState(false);
-  const [selected, setSelected] = useState<WPDestination | null>(null);
+  const [selected, setSelected] = useState<Destination | null>(null);
   const [showHint, setShowHint] = useState(true);
   const wrapperRef = useRef<HTMLDivElement>(null);
 
@@ -360,7 +361,7 @@ export function InfiniteGallery({ destinations, belowSectionId }: InfiniteGaller
 }
 
 interface DestinationCardProps {
-  dest: WPDestination;
+  dest: Destination;
   x: number;
   y: number;
   w: number;
@@ -369,7 +370,7 @@ interface DestinationCardProps {
 }
 
 function DestinationCard({ dest, x, y, w, h, onClick }: DestinationCardProps) {
-  const region = dest.regions?.nodes?.[0];
+  const region = dest.region;
 
   return (
     <div

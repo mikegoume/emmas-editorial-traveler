@@ -10,8 +10,8 @@ import {
   getFeaturedDestinations,
   getImageUrl,
   stripHtml,
-  type WPPost,
-} from "@/lib/graphql";
+} from "@/lib/db";
+import type { Post } from "@/lib/types";
 import Link from "next/link";
 
 export const revalidate = 60;
@@ -22,11 +22,8 @@ export default async function HomePage() {
     getFeaturedDestinations(),
   ]);
 
-  const featuredPost =
-    posts.find((p) => p.blogPostDetails?.featured) ?? posts[0] ?? null;
-  const sidebarPosts = posts
-    .filter((p) => p.id !== featuredPost?.id)
-    .slice(0, 2);
+  const featuredPost = posts.find((p) => p.featured) ?? posts[0] ?? null;
+  const sidebarPosts = posts.filter((p) => p.id !== featuredPost?.id).slice(0, 2);
 
   const heroImage = featuredPost
     ? getImageUrl(featuredPost)
@@ -35,12 +32,10 @@ export default async function HomePage() {
   const destinationData = destinations.map((dest) => ({
     id: dest.id,
     title: dest.title,
-    excerpt: dest.destinationDetails?.excerpt ?? null,
+    excerpt: dest.excerpt ?? null,
     imgSrc: getImageUrl(dest),
     slug: dest.slug,
   }));
-
-  console.log(destinationData.length);
 
   return (
     <>
@@ -78,7 +73,7 @@ export default async function HomePage() {
 
           {destinations.length === 0 ? (
             <p className="text-center py-16 text-outline font-body italic">
-              No destinations yet — add some in WordPress!
+              No destinations yet — add some in the admin!
             </p>
           ) : (
             <FadeUp delay={0.1}>
@@ -123,14 +118,14 @@ export default async function HomePage() {
                     </div>
                     <div className="p-10">
                       <div className="flex items-center gap-4 mb-4">
-                        {featuredPost.categories.nodes[0] && (
+                        {featuredPost.categories?.[0] && (
                           <span className="px-3 py-1 bg-tertiary-container text-on-tertiary-container rounded-full text-[10px] font-bold font-label uppercase">
-                            {featuredPost.categories.nodes[0].name}
+                            {featuredPost.categories[0].name}
                           </span>
                         )}
-                        {featuredPost.blogPostDetails?.readTime && (
+                        {featuredPost.read_time && (
                           <span className="text-outline text-xs font-label uppercase">
-                            {featuredPost.blogPostDetails.readTime}
+                            {featuredPost.read_time}
                           </span>
                         )}
                       </div>
@@ -153,22 +148,22 @@ export default async function HomePage() {
                   </div>
                 ) : (
                   <div className="bg-surface-container-lowest rounded-lg p-10 flex items-center justify-center text-outline font-body italic h-full">
-                    No posts yet — add some in WordPress!
+                    No posts yet — add some in the admin!
                   </div>
                 )}
               </FadeUp>
 
               <FadeUp delay={0.12}>
                 <div className="flex flex-col gap-8">
-                  {sidebarPosts.map((post: WPPost) => (
+                  {sidebarPosts.map((post: Post) => (
                     <Link
                       key={post.id}
                       href={`/blog/${post.slug}`}
                       className="bg-surface-container-lowest rounded-lg p-8 group block"
                     >
-                      {post.categories.nodes[0] && (
+                      {post.categories?.[0] && (
                         <span className="text-secondary-dim text-[10px] font-bold font-label uppercase mb-2 block">
-                          {post.categories.nodes[0].name}
+                          {post.categories[0].name}
                         </span>
                       )}
                       <h4 className="text-xl font-headline font-bold mb-3 group-hover:text-secondary transition-colors">

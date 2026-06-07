@@ -2,14 +2,14 @@ import CategoryFilter from "@/components/CategoryFilter";
 import Footer from "@/components/Footer";
 import PostListView from "@/components/PostListView";
 import TopNavBar from "@/components/TopNavBar";
-import { getAllCategories, getCategoryBySlug } from "@/lib/graphql";
+import { getAllCategories, getAllCategorySlugs, getCategoryBySlug } from "@/lib/db";
 import { notFound } from "next/navigation";
 
 export const revalidate = 60;
 
 export async function generateStaticParams() {
-  const categories = await getAllCategories();
-  return categories.map((c) => ({ slug: c.slug }));
+  const slugs = await getAllCategorySlugs();
+  return slugs.map((slug) => ({ slug }));
 }
 
 export async function generateMetadata({
@@ -47,7 +47,7 @@ export default async function CategoryPage({
           eyebrow="Category"
           title={category.name}
           description={category.description}
-          posts={category.posts.nodes}
+          posts={category.posts}
           emptyMessage={`No posts in "${category.name}" yet.`}
         />
       </main>

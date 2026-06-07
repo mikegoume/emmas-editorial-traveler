@@ -1,6 +1,6 @@
 "use client";
 
-import type { RegionWithDestinations } from "@/lib/graphql";
+import type { RegionWithDestinations } from "@/lib/db";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useState } from "react";
@@ -78,7 +78,7 @@ export default function NavLinks({
                       {region.name}
                     </h4>
                     <ul className="space-y-2">
-                      {region.destinations.nodes.map((dest) => (
+                      {region.destinations.map((dest) => (
                         <li key={dest.id}>
                           <Link
                             href={`/destinations/${dest.slug}`}

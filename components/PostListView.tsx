@@ -1,20 +1,14 @@
-import { formatDate, getImageUrl, stripHtml, type WPPost } from "@/lib/graphql";
+import { formatDate, getImageUrl, stripHtml } from "@/lib/db";
+import type { Post } from "@/lib/types";
 import Link from "next/link";
 
 type Props = {
-  /** Page heading shown above the grid */
   title: string;
-  /** Optional eyebrow label (e.g., "Category", "Tag") */
   eyebrow?: string;
-  /** Optional subtitle / description */
   description?: string | null;
-  /** Posts to render */
-  posts: WPPost[];
-  /** Optional featured post — rendered as a hero card */
-  featuredPost?: WPPost | null;
-  /** Optional sidebar content (categories, newsletter, etc.) */
+  posts: Post[];
+  featuredPost?: Post | null;
   sidebar?: React.ReactNode;
-  /** Empty state message if no posts */
   emptyMessage?: string;
 };
 
@@ -52,9 +46,7 @@ export default function PostListView({
           <div className="grid grid-cols-12 gap-8 items-center">
             <div className="col-span-12 lg:col-span-8 relative rounded-lg overflow-hidden h-[600px] editorial-shadow">
               <img
-                alt={
-                  featuredPost.featuredImage?.node.altText ?? featuredPost.title
-                }
+                alt={featuredPost.featured_image_alt || featuredPost.title}
                 className="w-full h-full object-cover"
                 src={getImageUrl(featuredPost)}
               />
@@ -111,14 +103,14 @@ export default function PostListView({
                   <Link href={`/blog/${post.slug}`}>
                     <div className="relative rounded-lg overflow-hidden aspect-[4/5] mb-6 editorial-shadow transition-transform duration-500 group-hover:scale-[1.02]">
                       <img
-                        alt={post.featuredImage?.node.altText ?? post.title}
+                        alt={post.featured_image_alt || post.title}
                         className="w-full h-full object-cover"
                         src={getImageUrl(post)}
                       />
-                      {post.categories.nodes[0] && (
+                      {post.categories?.[0] && (
                         <div className="absolute top-4 left-4">
                           <span className="bg-surface-container-lowest/80 backdrop-blur-md px-3 py-1 rounded-full text-[10px] font-bold tracking-widest uppercase">
-                            {post.categories.nodes[0].name}
+                            {post.categories[0].name}
                           </span>
                         </div>
                       )}
@@ -132,10 +124,10 @@ export default function PostListView({
                   </p>
                   <div className="flex items-center text-xs font-label text-outline uppercase tracking-wider">
                     <span>{formatDate(post.date)}</span>
-                    {post.blogPostDetails?.readTime && (
+                    {post.read_time && (
                       <>
                         <span className="mx-2">•</span>
-                        <span>{post.blogPostDetails.readTime}</span>
+                        <span>{post.read_time}</span>
                       </>
                     )}
                   </div>
