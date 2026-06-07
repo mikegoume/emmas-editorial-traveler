@@ -14,7 +14,7 @@ export default async function EditDestinationPage({
       .select("*")
       .eq("id", params.id)
       .single(),
-    supabase.from("regions").select("id, name, slug, description").order("name"),
+    supabase.from("regions").select("id, name, slug, description, parent_id").order("name"),
   ]);
 
   if (!destination) notFound();

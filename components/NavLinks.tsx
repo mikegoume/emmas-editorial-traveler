@@ -7,7 +7,6 @@ import { useState } from "react";
 
 const baseLinks = [
   { label: "Home", href: "/" },
-  { label: "Blog", href: "/blog" },
   { label: "About", href: "/about" },
   { label: "Gallery", href: "/gallery" },
 ];
@@ -68,34 +67,60 @@ export default function NavLinks({
           <div className="bg-surface-container-lowest dark:bg-zinc-900 rounded-lg shadow-2xl border border-outline-variant/15 overflow-hidden min-w-[640px]">
             {regions.length === 0 ? (
               <div className="p-8 text-center text-outline font-body italic text-sm">
-                No regions yet. Assign regions to destinations in WordPress.
+                No destinations yet.
               </div>
             ) : (
               <div className="grid grid-cols-2 lg:grid-cols-3 gap-x-2 p-6">
                 {regions.map((region) => (
                   <div key={region.id} className="p-3">
+                    {/* Top-level region header */}
                     <h4 className="text-xs font-label font-bold uppercase tracking-widest text-secondary mb-3 pb-2 border-b border-outline-variant/15">
                       {region.name}
                     </h4>
-                    <ul className="space-y-2">
-                      {region.destinations.map((dest) => (
-                        <li key={dest.id}>
-                          <Link
-                            href={`/destinations/${dest.slug}`}
-                            className="font-body text-sm text-on-surface-variant hover:text-secondary transition-colors flex items-center gap-2 group"
-                          >
-                            <span className="w-1 h-1 rounded-full bg-outline-variant group-hover:bg-secondary transition-colors" />
-                            {dest.title}
-                          </Link>
-                        </li>
-                      ))}
-                    </ul>
+
+                    {/* Destinations directly under this region */}
+                    {region.destinations.length > 0 && (
+                      <ul className="space-y-2 mb-3">
+                        {region.destinations.map((dest) => (
+                          <li key={dest.id}>
+                            <Link
+                              href={`/destinations/${dest.slug}`}
+                              className="font-body text-sm text-on-surface-variant hover:text-secondary transition-colors flex items-center gap-2 group"
+                            >
+                              <span className="w-1 h-1 rounded-full bg-outline-variant group-hover:bg-secondary transition-colors" />
+                              {dest.title}
+                            </Link>
+                          </li>
+                        ))}
+                      </ul>
+                    )}
+
+                    {/* Child regions */}
+                    {region.children.map((child) => (
+                      <div key={child.id} className="mb-3">
+                        <p className="text-[10px] font-label font-bold uppercase tracking-wider text-outline mb-1.5">
+                          {child.name}
+                        </p>
+                        <ul className="space-y-2">
+                          {child.destinations.map((dest) => (
+                            <li key={dest.id}>
+                              <Link
+                                href={`/destinations/${dest.slug}`}
+                                className="font-body text-sm text-on-surface-variant hover:text-secondary transition-colors flex items-center gap-2 group"
+                              >
+                                <span className="w-1 h-1 rounded-full bg-outline-variant group-hover:bg-secondary transition-colors" />
+                                {dest.title}
+                              </Link>
+                            </li>
+                          ))}
+                        </ul>
+                      </div>
+                    ))}
                   </div>
                 ))}
               </div>
             )}
 
-            {/* Footer link */}
             <Link
               href="/destinations"
               className="flex items-center justify-between bg-surface-container-low px-6 py-4 text-sm font-headline font-bold text-secondary hover:bg-secondary-container transition-colors"

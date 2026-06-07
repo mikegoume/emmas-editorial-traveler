@@ -5,7 +5,7 @@ export default async function NewDestinationPage() {
   const supabase = await createServerClient();
   const { data: regions } = await supabase
     .from("regions")
-    .select("id, name, slug, description")
+    .select("id, name, slug, description, parent_id")
     .order("name");
 
   return (

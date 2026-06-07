@@ -1,7 +1,7 @@
 import DocxViewer from "@/components/DocxViewer";
 import Footer from "@/components/Footer";
 import TopNavBar from "@/components/TopNavBar";
-import { getImageUrl } from "@/lib/db";
+import { formatDate, getImageUrl } from "@/lib/db";
 import type { Destination } from "@/lib/types";
 import Link from "next/link";
 
@@ -76,7 +76,7 @@ export default function DestinationView({
                     <span className="material-symbols-outlined text-secondary">
                       calendar_today
                     </span>
-                    <span>Visited: {destination.visit_date}</span>
+                    <span>Visited: {formatDate(destination.visit_date)}</span>
                   </div>
                 )}
                 {documentUrl && (

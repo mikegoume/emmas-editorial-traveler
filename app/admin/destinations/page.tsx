@@ -11,7 +11,7 @@ export default async function AdminDestinationsPage() {
 
   return (
     <div>
-      <div className="flex items-center justify-between mb-8">
+      <div className="flex flex-wrap items-center justify-between gap-4 mb-8">
         <div>
           <h1 className="font-headline text-3xl font-bold text-on-background">
             Destinations
@@ -40,7 +40,8 @@ export default async function AdminDestinationsPage() {
         </div>
       ) : (
         <div className="bg-surface-container-lowest border border-outline-variant/15 rounded-lg overflow-hidden">
-          <table className="w-full text-sm">
+          <div className="overflow-x-auto">
+          <table className="w-full text-sm min-w-[480px]">
             <thead className="bg-surface-container-low border-b border-outline-variant/15">
               <tr>
                 <th className="text-left px-4 py-3 font-label text-xs uppercase tracking-widest text-outline">
@@ -105,6 +106,7 @@ export default async function AdminDestinationsPage() {
               ))}
             </tbody>
           </table>
+          </div>
         </div>
       )}
     </div>

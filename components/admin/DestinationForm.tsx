@@ -44,9 +44,35 @@ export default function DestinationForm({ destination, regions }: Props) {
 
   const [saving, setSaving] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const [geocoding, setGeocoding] = useState(false);
+  const [geocodeError, setGeocodeError] = useState<string | null>(null);
 
   function set<K extends keyof typeof form>(key: K, val: (typeof form)[K]) {
     setForm((f) => ({ ...f, [key]: val }));
+  }
+
+  async function handleGeocode() {
+    const query = [form.title].filter(Boolean).join(", ");
+    if (!query) return;
+    setGeocoding(true);
+    setGeocodeError(null);
+    try {
+      const res = await fetch(
+        `https://nominatim.openstreetmap.org/search?q=${encodeURIComponent(query)}&format=json&limit=1`,
+        { headers: { "Accept-Language": "en" } },
+      );
+      const data = await res.json();
+      if (!data.length) {
+        setGeocodeError("No location found — try a more specific title.");
+      } else {
+        set("latitude", parseFloat(data[0].lat).toFixed(6));
+        set("longitude", parseFloat(data[0].lon).toFixed(6));
+      }
+    } catch {
+      setGeocodeError("Geocoding request failed — check your connection.");
+    } finally {
+      setGeocoding(false);
+    }
   }
 
   async function handleDelete() {
@@ -97,8 +123,8 @@ export default function DestinationForm({ destination, regions }: Props) {
       <section className="bg-surface-container-lowest border border-outline-variant/15 rounded-lg p-6 space-y-5">
         <h2 className="font-headline font-bold text-on-surface">Basic info</h2>
 
-        <div className="grid grid-cols-2 gap-4">
-          <div className="col-span-2 space-y-1.5">
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+          <div className="col-span-1 sm:col-span-1 sm:col-span-2 space-y-1.5">
             <label className="text-xs font-bold uppercase tracking-wider text-on-surface-variant font-label block">
               Title *
             </label>
@@ -113,7 +139,7 @@ export default function DestinationForm({ destination, regions }: Props) {
             />
           </div>
 
-          <div className="col-span-2 space-y-1.5">
+          <div className="col-span-1 sm:col-span-2 space-y-1.5">
             <label className="text-xs font-bold uppercase tracking-wider text-on-surface-variant font-label block">
               Slug *
             </label>
@@ -125,7 +151,7 @@ export default function DestinationForm({ destination, regions }: Props) {
             />
           </div>
 
-          <div className="col-span-2 space-y-1.5">
+          <div className="col-span-1 sm:col-span-2 space-y-1.5">
             <label className="text-xs font-bold uppercase tracking-wider text-on-surface-variant font-label block">
               Excerpt
             </label>
@@ -160,42 +186,54 @@ export default function DestinationForm({ destination, regions }: Props) {
               Visit date
             </label>
             <input
+              type="date"
               value={form.visit_date}
               onChange={(e) => set("visit_date", e.target.value)}
-              placeholder="e.g. Sept 2023"
               className="w-full bg-surface-container-low border border-outline-variant/30 rounded-lg px-4 py-2.5 text-on-surface text-sm focus:outline-none focus:ring-2 focus:ring-secondary"
             />
           </div>
 
-          <div className="space-y-1.5">
-            <label className="text-xs font-bold uppercase tracking-wider text-on-surface-variant font-label block">
-              Latitude
-            </label>
-            <input
-              type="number"
-              step="any"
-              value={form.latitude}
-              onChange={(e) => set("latitude", e.target.value)}
-              placeholder="37.9838"
-              className="w-full bg-surface-container-low border border-outline-variant/30 rounded-lg px-4 py-2.5 text-on-surface text-sm focus:outline-none focus:ring-2 focus:ring-secondary"
-            />
+          <div className="col-span-1 sm:col-span-2 space-y-2">
+            <div className="flex items-center justify-between">
+              <span className="text-xs font-bold uppercase tracking-wider text-on-surface-variant font-label">
+                Coordinates
+              </span>
+              <button
+                type="button"
+                onClick={handleGeocode}
+                disabled={geocoding || !form.title}
+                className="flex items-center gap-1.5 text-xs font-bold text-secondary hover:text-secondary/80 disabled:opacity-40 transition-colors"
+              >
+                <span className="material-symbols-outlined text-sm">
+                  {geocoding ? "progress_activity" : "my_location"}
+                </span>
+                {geocoding ? "Finding…" : "Find from title"}
+              </button>
+            </div>
+            <div className="grid grid-cols-2 gap-3">
+              <input
+                type="number"
+                step="any"
+                value={form.latitude}
+                onChange={(e) => set("latitude", e.target.value)}
+                placeholder="Latitude (e.g. 37.9838)"
+                className="w-full bg-surface-container-low border border-outline-variant/30 rounded-lg px-4 py-2.5 text-on-surface text-sm focus:outline-none focus:ring-2 focus:ring-secondary"
+              />
+              <input
+                type="number"
+                step="any"
+                value={form.longitude}
+                onChange={(e) => set("longitude", e.target.value)}
+                placeholder="Longitude (e.g. 23.7275)"
+                className="w-full bg-surface-container-low border border-outline-variant/30 rounded-lg px-4 py-2.5 text-on-surface text-sm focus:outline-none focus:ring-2 focus:ring-secondary"
+              />
+            </div>
+            {geocodeError && (
+              <p className="text-xs text-error">{geocodeError}</p>
+            )}
           </div>
 
-          <div className="space-y-1.5">
-            <label className="text-xs font-bold uppercase tracking-wider text-on-surface-variant font-label block">
-              Longitude
-            </label>
-            <input
-              type="number"
-              step="any"
-              value={form.longitude}
-              onChange={(e) => set("longitude", e.target.value)}
-              placeholder="23.7275"
-              className="w-full bg-surface-container-low border border-outline-variant/30 rounded-lg px-4 py-2.5 text-on-surface text-sm focus:outline-none focus:ring-2 focus:ring-secondary"
-            />
-          </div>
-
-          <div className="col-span-2">
+          <div className="col-span-1 sm:col-span-2">
             <label className="flex items-center gap-3 cursor-pointer">
               <input
                 type="checkbox"
@@ -223,7 +261,7 @@ export default function DestinationForm({ destination, regions }: Props) {
       {/* Images */}
       <section className="bg-surface-container-lowest border border-outline-variant/15 rounded-lg p-6 space-y-5">
         <h2 className="font-headline font-bold text-on-surface">Images</h2>
-        <div className="grid grid-cols-2 gap-6">
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
           <ImageUpload
             label="Hero image"
             value={form.hero_image_url}
@@ -264,7 +302,7 @@ export default function DestinationForm({ destination, regions }: Props) {
         </p>
       )}
 
-      <div className="flex items-center gap-4">
+      <div className="flex flex-wrap items-center gap-3">
         <button
           type="submit"
           disabled={saving}
@@ -283,7 +321,7 @@ export default function DestinationForm({ destination, regions }: Props) {
           <button
             type="button"
             onClick={handleDelete}
-            className="ml-auto px-6 py-2.5 rounded-lg font-bold text-sm text-error hover:bg-error-container/20 transition-colors"
+            className="sm:ml-auto px-6 py-2.5 rounded-lg font-bold text-sm text-error hover:bg-error-container/20 transition-colors"
           >
             Delete
           </button>

@@ -1,5 +1,5 @@
 import TopNavBar from "@/components/TopNavBar";
-import { getImageUrl } from "@/lib/db";
+import { formatDate, getImageUrl } from "@/lib/db";
 import type { RegionWithFullDestinations } from "@/lib/db";
 import type { Destination } from "@/lib/types";
 import Link from "next/link";
@@ -84,7 +84,7 @@ export default function RegionView({
                         <span className="material-symbols-outlined text-base">
                           calendar_today
                         </span>
-                        <span>{dest.visit_date}</span>
+                        <span>{formatDate(dest.visit_date)}</span>
                       </div>
                     )}
                   </div>

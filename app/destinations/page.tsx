@@ -1,6 +1,7 @@
 import Footer from "@/components/Footer";
 import TopNavBar from "@/components/TopNavBar";
 import {
+  formatDate,
   getAllDestinations,
   getImageUrl,
   getRegionsWithDestinations,
@@ -151,7 +152,7 @@ export default async function DestinationsPage() {
                           <span className="material-symbols-outlined text-base">
                             calendar_today
                           </span>
-                          <span>{dest.visit_date}</span>
+                          <span>{formatDate(dest.visit_date)}</span>
                         </div>
                       )}
                     </div>
