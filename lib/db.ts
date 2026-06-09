@@ -41,8 +41,7 @@ export async function getAllDestinations(): Promise<Destination[]> {
 export async function getDestinationBySlug(
   slug: string,
 ): Promise<Destination | null> {
-  const supabase = await createServerClient();
-  const { data, error } = await supabase
+  const { data, error } = await createAnonClient()
     .from("destinations")
     .select(`*, region:regions(*)`)
     .eq("slug", slug)
@@ -118,8 +117,7 @@ export type RegionWithFullDestinations = Region & {
 export async function getRegionBySlug(
   slug: string,
 ): Promise<RegionWithFullDestinations | null> {
-  const supabase = await createServerClient();
-  const { data, error } = await supabase
+  const { data, error } = await createAnonClient()
     .from("regions")
     .select(`*, destinations(*, region:regions(*))`)
     .eq("slug", slug)

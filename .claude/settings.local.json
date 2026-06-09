@@ -7,7 +7,10 @@
       "Bash(npm run *)",
       "Bash(node -e \"require\\('lenis/react'\\)\")",
       "Bash(node -e \"const pkg = require\\('./node_modules/lenis/package.json'\\); console.log\\(JSON.stringify\\(pkg.exports?.['./react'] ?? 'NOT FOUND', null, 2\\)\\)\")",
-      "Bash(npx tsc *)"
+      "Bash(npx tsc *)",
+      "mcp__supabase__list_projects",
+      "mcp__supabase__execute_sql",
+      "mcp__supabase__get_logs"
     ]
   }
 }
