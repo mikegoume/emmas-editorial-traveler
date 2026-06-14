@@ -1,7 +1,7 @@
 import DocxViewer from "@/components/DocxViewer";
 import Footer from "@/components/Footer";
 import TopNavBar from "@/components/TopNavBar";
-import { formatDate, getImageUrl } from "@/lib/db";
+import { formatDate, getImageUrl, getOptimizedImageUrl } from "@/lib/db";
 import type { Destination } from "@/lib/types";
 import Link from "next/link";
 
@@ -23,7 +23,8 @@ export default function DestinationView({
           <img
             alt={destination.featured_image_alt || destination.title}
             className="absolute inset-0 w-full h-full object-cover"
-            src={heroImage}
+            src={getOptimizedImageUrl(heroImage, { width: 1600, quality: 85 })}
+            fetchPriority="high"
           />
           <div className="absolute inset-0 bg-gradient-to-t from-on-background/60 via-transparent to-transparent" />
           <div className="relative h-full flex flex-col justify-end items-center text-center pb-24 px-6 max-w-7xl mx-auto">

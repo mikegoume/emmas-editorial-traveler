@@ -17,7 +17,8 @@ export default function DocUpload({ value, onChange }: Props) {
   async function handleFile(file: File) {
     setUploading(true);
     setError(null);
-    const path = `${Date.now()}-${file.name.replace(/\s+/g, "-")}`;
+    const ext = file.name.split(".").pop() || "docx";
+    const path = `${Date.now()}-${Math.random().toString(36).slice(2)}.${ext}`;
 
     const { error: uploadError } = await supabase.storage
       .from("documents")

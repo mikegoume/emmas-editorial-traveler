@@ -1,12 +1,34 @@
 import Footer from "@/components/Footer";
 import TopNavBar from "@/components/TopNavBar";
 import WorldMapWrapper from "@/components/WorldMapWrapper";
-import { getAllDestinations } from "@/lib/db";
+import { getAllDestinations, getOptimizedImageUrl, getSiteSetting } from "@/lib/db";
 
 export const revalidate = 60;
 
+const DEFAULT_PHOTO =
+  "https://lh3.googleusercontent.com/aida-public/AB6AXuCF_3viPywrcJhKi4OzDiCg3PiRY1hw_oVzRnMEH5nO_ZpT7QixnsePwamOPUupbgc9R38k-p76DcvF2XQkQ9KIeXNb88q7KaK7rwtJejMTp-kw9F_aHrwYkdXp-qTPfIg7dk767vreUfH9XN1xoZR2RQX1V4JTrIBRdInyKWCUFhqyweQ5M5uQs8Gw_VlOMndI95dFA6IKMOoK5SbK1pr4HZWBTmPYAmACeNrvHiiB1WD2lOgv0CfwGQb-m3qbsQ-DzZ8sq99tXg";
+
+const DEFAULT_HEADING = "Curating the world, one story at a time.";
+
+const DEFAULT_BIO = [
+  "Travel is more than a movement between coordinates; it is a discipline of observation. My journey began not with a suitcase, but with a camera and an insatiable curiosity for the quiet corners of the world that rarely make it to the front of a brochure.",
+  "As a former architectural journalist, I spent years documenting how structures define our lives. Now, I apply that same editorial lens to the world at large. Through The Editorial Traveler, I curate experiences that prioritize depth over speed and atmosphere over checkboxes.",
+  "From the misty peaks of the Alentejo to the hidden tea houses of Kyoto, my goal is to bridge the gap between high-end aesthetics and raw, authentic human connection. We don't just visit places; we inhabit them, if only for a moment.",
+];
+
 export default async function AboutPage() {
-  const destinations = await getAllDestinations();
+  const [destinations, aboutPhoto, aboutHeading, aboutBio] = await Promise.all([
+    getAllDestinations(),
+    getSiteSetting("about_photo_url").catch(() => null),
+    getSiteSetting("about_heading").catch(() => null),
+    getSiteSetting("about_bio").catch(() => null),
+  ]);
+
+  const photo = aboutPhoto || DEFAULT_PHOTO;
+  const heading = aboutHeading || DEFAULT_HEADING;
+  const bioParagraphs = aboutBio
+    ? aboutBio.split(/\n\n+/).filter(Boolean)
+    : DEFAULT_BIO;
 
   return (
     <>
@@ -20,32 +42,12 @@ export default async function AboutPage() {
               THE JOURNEY
             </span>
             <h1 className="text-5xl md:text-6xl font-extrabold tracking-tighter font-headline text-on-background mb-8 leading-tight">
-              Curating the world, one story at a time.
+              {heading}
             </h1>
             <div className="space-y-6 text-lg leading-relaxed text-on-surface-variant max-w-2xl font-body">
-              <p>
-                Travel is more than a movement between coordinates; it is a
-                discipline of observation. My journey began not with a suitcase,
-                but with a camera and an insatiable curiosity for the quiet
-                corners of the world that rarely make it to the front of a
-                brochure.
-              </p>
-              <p>
-                As a former architectural journalist, I spent years documenting
-                how structures define our lives. Now, I apply that same
-                editorial lens to the world at large. Through{" "}
-                <span className="italic text-secondary font-semibold">
-                  The Editorial Traveler
-                </span>
-                , I curate experiences that prioritize depth over speed and
-                atmosphere over checkboxes.
-              </p>
-              <p>
-                From the misty peaks of the Alentejo to the hidden tea houses of
-                Kyoto, my goal is to bridge the gap between high-end aesthetics
-                and raw, authentic human connection. We don&apos;t just visit
-                places; we inhabit them, if only for a moment.
-              </p>
+              {bioParagraphs.map((p, i) => (
+                <p key={i}>{p}</p>
+              ))}
             </div>
 
             {/* Stats */}
@@ -76,7 +78,8 @@ export default async function AboutPage() {
               <img
                 alt="Portrait of the creator"
                 className="w-full h-full object-cover"
-                src="https://lh3.googleusercontent.com/aida-public/AB6AXuCF_3viPywrcJhKi4OzDiCg3PiRY1hw_oVzRnMEH5nO_ZpT7QixnsePwamOPUupbgc9R38k-p76DcvF2XQkQ9KIeXNb88q7KaK7rwtJejMTp-kw9F_aHrwYkdXp-qTPfIg7dk767vreUfH9XN1xoZR2RQX1V4JTrIBRdInyKWCUFhqyweQ5M5uQs8Gw_VlOMndI95dFA6IKMOoK5SbK1pr4HZWBTmPYAmACeNrvHiiB1WD2lOgv0CfwGQb-m3qbsQ-DzZ8sq99tXg"
+                src={getOptimizedImageUrl(photo, { width: 800, quality: 85 })}
+                fetchPriority="high"
               />
               <div className="absolute bottom-0 left-0 right-0 p-8 bg-gradient-to-t from-primary-dim/60 to-transparent">
                 <p className="text-on-primary font-medium italic">

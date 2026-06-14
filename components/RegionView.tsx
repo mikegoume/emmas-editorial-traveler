@@ -1,5 +1,5 @@
 import TopNavBar from "@/components/TopNavBar";
-import { formatDate, getImageUrl } from "@/lib/db";
+import { formatDate, getImageUrl, getOptimizedImageUrl } from "@/lib/db";
 import type { RegionWithFullDestinations } from "@/lib/db";
 import type { Destination } from "@/lib/types";
 import Link from "next/link";
@@ -24,7 +24,8 @@ export default function RegionView({
               <img
                 alt={region.name}
                 className="w-full h-full object-cover"
-                src={getImageUrl(hero)}
+                src={getOptimizedImageUrl(getImageUrl(hero), { width: 1440, quality: 85 })}
+                fetchPriority="high"
               />
             )}
             <div className="absolute inset-0 bg-black/30 flex flex-col justify-end p-8 md:p-16">

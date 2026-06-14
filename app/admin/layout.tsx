@@ -10,6 +10,7 @@ const navItems = [
   { label: "Destinations", href: "/admin/destinations", icon: "explore" },
   { label: "Regions", href: "/admin/regions", icon: "map" },
   { label: "Gallery", href: "/admin/gallery", icon: "photo_library" },
+  { label: "Settings", href: "/admin/settings", icon: "tune" },
 ];
 
 export default function AdminLayout({

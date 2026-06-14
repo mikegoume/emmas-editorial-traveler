@@ -43,6 +43,15 @@ const ScrollExpandMedia = ({
   const sectionRef = useRef<HTMLDivElement | null>(null);
   const lenis = useLenis();
 
+  // Prevent browser scroll restoration from racing with the hero on refresh.
+  useEffect(() => {
+    history.scrollRestoration = "manual";
+    window.scrollTo(0, 0);
+    return () => {
+      history.scrollRestoration = "auto";
+    };
+  }, []);
+
   // Pause Lenis while the hero controls scroll; resume once fully expanded.
   useEffect(() => {
     if (!mediaFullyExpanded) {
@@ -194,6 +203,7 @@ const ScrollExpandMedia = ({
               src={bgImageSrc}
               alt="Background"
               className="w-screen h-screen object-cover object-center"
+              fetchPriority="high"
             />
             <div className="absolute inset-0 bg-black/20" />
           </motion.div>
@@ -266,6 +276,7 @@ const ScrollExpandMedia = ({
                       src={mediaSrc}
                       alt={title || "Media content"}
                       className="w-full h-full object-cover rounded-xl"
+                      fetchPriority="high"
                     />
                     <motion.div
                       className="absolute inset-0 bg-black/50 rounded-xl"

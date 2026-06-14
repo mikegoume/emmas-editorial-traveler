@@ -4,6 +4,7 @@ import {
   formatDate,
   getAllDestinations,
   getImageUrl,
+  getOptimizedImageUrl,
   getRegionsWithDestinations,
 } from "@/lib/db";
 import type { Destination } from "@/lib/types";
@@ -32,9 +33,10 @@ export default async function DestinationsPage() {
               className="w-full h-full object-cover"
               src={
                 heroDestination
-                  ? getImageUrl(heroDestination)
+                  ? getOptimizedImageUrl(getImageUrl(heroDestination), { width: 1440, quality: 85 })
                   : "https://placehold.co/1440x600/eceeef/5b6061?text=Destinations"
               }
+              fetchPriority="high"
             />
             <div className="absolute inset-0 bg-black/35 flex flex-col justify-end p-8 md:p-16">
               <div className="max-w-3xl">
@@ -134,8 +136,9 @@ export default async function DestinationsPage() {
                   >
                     <img
                       className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700"
-                      src={getImageUrl(dest)}
+                      src={getOptimizedImageUrl(getImageUrl(dest), { width: 600, quality: 75 })}
                       alt={dest.featured_image_alt || dest.title}
+                      loading="lazy"
                     />
                     <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent opacity-60" />
                     <div className="absolute bottom-0 left-0 p-8 w-full transform translate-y-2 group-hover:translate-y-0 transition-transform duration-500">

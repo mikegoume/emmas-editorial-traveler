@@ -4,33 +4,44 @@ import TopNavBar from "@/components/TopNavBar";
 import { FadeUp } from "@/components/motion/FadeUp";
 import { PortfolioGallery } from "@/components/ui/portfolio-gallery";
 import ScrollExpandMedia from "@/components/ui/scroll-expansion-hero";
-import { getFeaturedDestinations, getGalleryImages, getImageUrl } from "@/lib/db";
+import {
+  getFeaturedDestinations,
+  getGalleryImages,
+  getImageUrl,
+  getOptimizedImageUrl,
+  getSiteSetting,
+} from "@/lib/db";
 import Link from "next/link";
 
 export const revalidate = 60;
 
 export default async function HomePage() {
-  const [destinations, galleryImages] = await Promise.all([
+  const [destinations, galleryImages, heroSetting] = await Promise.all([
     getFeaturedDestinations(),
     getGalleryImages().catch(() => []),
+    getSiteSetting("hero_image_url").catch(() => null),
   ]);
 
-  const heroImage =
-    destinations[0]
+  const rawHeroImage =
+    heroSetting ||
+    (destinations[0]
       ? getImageUrl(destinations[0])
-      : "https://images.unsplash.com/photo-1476514525535-07fb3b4ae5f1?q=80&w=1920&auto=format";
+      : "https://images.unsplash.com/photo-1476514525535-07fb3b4ae5f1?q=80&w=1920&auto=format");
+  const heroImage = getOptimizedImageUrl(rawHeroImage, { width: 1920, quality: 85 });
 
   const destinationData = destinations.map((dest) => ({
     id: dest.id,
     title: dest.title,
     excerpt: dest.excerpt ?? null,
-    imgSrc: getImageUrl(dest),
+    imgSrc: getOptimizedImageUrl(getImageUrl(dest), { width: 800, quality: 75 }),
     slug: dest.slug,
   }));
 
   const marqueeImages =
     galleryImages.length > 0
-      ? galleryImages.map((img) => ({ src: img.url, alt: img.alt }))
+      ? galleryImages
+          .slice(0, galleryImages.length < 9 ? galleryImages.length : 9)
+          .map((img) => ({ src: img.url, alt: img.alt }))
       : undefined;
 
   return (

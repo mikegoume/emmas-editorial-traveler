@@ -4,6 +4,19 @@ import type { Destination, GalleryImage, Region } from "./types";
 
 // ─── Helpers ────────────────────────────────────────────────────────────────
 
+export function getOptimizedImageUrl(
+  url: string,
+  { width = 1200, quality = 80 }: { width?: number; quality?: number } = {},
+): string {
+  if (!url) return url;
+  const STORAGE = "/storage/v1/object/public/";
+  const idx = url.indexOf(STORAGE);
+  if (idx === -1) return url; // external URL — pass through
+  const base = url.slice(0, idx);
+  const path = url.slice(idx + STORAGE.length);
+  return `${base}/storage/v1/render/image/public/${path}?width=${width}&quality=${quality}&format=webp`;
+}
+
 export function getImageUrl(item: Destination): string {
   return (
     item.hero_image_url ??
@@ -138,6 +151,29 @@ export async function getGalleryImages(): Promise<GalleryImage[]> {
     .order("created_at", { ascending: true });
   if (error) throw error;
   return data ?? [];
+}
+
+// ─── Site Settings ────────────────────────────────────────────────────────────
+
+export async function getSiteSetting(key: string): Promise<string | null> {
+  const supabase = await createServerClient();
+  const { data } = await supabase
+    .from("site_settings")
+    .select("value")
+    .eq("key", key)
+    .single();
+  return data?.value ?? null;
+}
+
+export async function upsertSiteSetting(
+  key: string,
+  value: string,
+): Promise<void> {
+  const supabase = await createServerClient();
+  const { error } = await supabase
+    .from("site_settings")
+    .upsert({ key, value }, { onConflict: "key" });
+  if (error) throw error;
 }
 
 // ─── Static param helpers (build-time, no cookies) ───────────────────────────
