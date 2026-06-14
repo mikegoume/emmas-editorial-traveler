@@ -1,15 +1,33 @@
 import { getSiteSetting } from "@/lib/db";
 import AboutPageSettings from "./AboutPageSettings";
+import AboutStatsSettings from "./AboutStatsSettings";
 import HeroImageSetting from "./HeroImageSetting";
 
 export const dynamic = "force-dynamic";
 
 export default async function SettingsPage() {
-  const [heroImageUrl, aboutPhoto, aboutHeading, aboutBio] = await Promise.all([
+  const [
+    heroImageUrl,
+    aboutPhoto,
+    aboutHeading,
+    aboutBio,
+    stat1Value,
+    stat1Label,
+    stat2Value,
+    stat2Label,
+    stat3Value,
+    stat3Label,
+  ] = await Promise.all([
     getSiteSetting("hero_image_url"),
     getSiteSetting("about_photo_url"),
     getSiteSetting("about_heading"),
     getSiteSetting("about_bio"),
+    getSiteSetting("about_stat_1_value"),
+    getSiteSetting("about_stat_1_label"),
+    getSiteSetting("about_stat_2_value"),
+    getSiteSetting("about_stat_2_label"),
+    getSiteSetting("about_stat_3_value"),
+    getSiteSetting("about_stat_3_label"),
   ]);
 
   return (
@@ -47,6 +65,24 @@ export default async function SettingsPage() {
           initialPhotoUrl={aboutPhoto ?? ""}
           initialHeading={aboutHeading ?? ""}
           initialBio={aboutBio ?? ""}
+        />
+      </div>
+
+      {/* About Stats */}
+      <div className="bg-surface-container-lowest border border-outline-variant/20 rounded-xl p-6">
+        <h2 className="text-sm font-bold uppercase tracking-wider text-on-surface-variant font-label mb-1">
+          About Page — Stats
+        </h2>
+        <p className="text-sm text-outline font-body mb-6">
+          The three stat cards shown on the About page (e.g. 42 Countries).
+        </p>
+        <AboutStatsSettings
+          initialStat1Value={stat1Value ?? ""}
+          initialStat1Label={stat1Label ?? ""}
+          initialStat2Value={stat2Value ?? ""}
+          initialStat2Label={stat2Label ?? ""}
+          initialStat3Value={stat3Value ?? ""}
+          initialStat3Label={stat3Label ?? ""}
         />
       </div>
     </div>

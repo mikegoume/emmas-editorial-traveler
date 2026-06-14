@@ -55,3 +55,33 @@ export async function saveAboutSettingsAction(data: {
   revalidatePath("/about");
   revalidatePath("/admin/settings");
 }
+
+export async function saveAboutStatsAction(stats: {
+  stat1Value: string;
+  stat1Label: string;
+  stat2Value: string;
+  stat2Label: string;
+  stat3Value: string;
+  stat3Label: string;
+}): Promise<{ error: string } | void> {
+  const supabase = await createServerClient();
+
+  const rows = [
+    { key: "about_stat_1_value", value: stats.stat1Value },
+    { key: "about_stat_1_label", value: stats.stat1Label },
+    { key: "about_stat_2_value", value: stats.stat2Value },
+    { key: "about_stat_2_label", value: stats.stat2Label },
+    { key: "about_stat_3_value", value: stats.stat3Value },
+    { key: "about_stat_3_label", value: stats.stat3Label },
+  ].filter((r) => r.value.trim() !== "");
+
+  if (rows.length > 0) {
+    const { error } = await supabase
+      .from("site_settings")
+      .upsert(rows, { onConflict: "key" });
+    if (error) return { error: error.message };
+  }
+
+  revalidatePath("/about");
+  revalidatePath("/admin/settings");
+}

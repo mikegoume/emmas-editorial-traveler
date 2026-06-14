@@ -42,7 +42,7 @@ function LoginForm() {
           <h1 className="font-headline text-3xl font-extrabold tracking-tighter text-on-background mb-1">
             The Editorial Traveler
           </h1>
-          <p className="text-outline font-body text-sm">Admin access</p>
+          <p className="text-outline font-body text-sm">Πρόσβαση διαχειριστή</p>
         </div>
 
         <form
@@ -53,6 +53,7 @@ function LoginForm() {
             <label className="text-xs font-bold uppercase tracking-wider text-on-surface-variant font-label block">
               Email
             </label>
+
             <input
               type="email"
               value={email}
@@ -65,7 +66,7 @@ function LoginForm() {
 
           <div className="space-y-2">
             <label className="text-xs font-bold uppercase tracking-wider text-on-surface-variant font-label block">
-              Password
+              Κωδικός
             </label>
             <input
               type="password"
@@ -88,7 +89,7 @@ function LoginForm() {
             disabled={loading}
             className="w-full bg-secondary text-on-secondary font-bold font-label rounded-lg py-3 text-sm uppercase tracking-widest hover:bg-secondary-dim transition-colors disabled:opacity-50"
           >
-            {loading ? "Signing in…" : "Sign in"}
+            {loading ? "Σύνδεση…" : "Σύνδεση"}
           </button>
         </form>
       </div>

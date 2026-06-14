@@ -53,9 +53,9 @@ export default async function HomePage() {
           mediaType="image"
           mediaSrc={heroImage}
           bgImageSrc={heroImage}
-          title="Silent Moments"
-          date="Est. 2024"
-          scrollToExpand="Scroll to explore"
+          title="Σιωπηλές Στιγμές"
+          date="Ίδρ. 2024"
+          scrollToExpand="Κυλίστε για εξερεύνηση"
           textBlend
         />
 
@@ -65,22 +65,21 @@ export default async function HomePage() {
             <div className="flex flex-col md:flex-row md:items-end justify-between mb-16 gap-8">
               <div className="max-w-xl">
                 <span className="text-secondary font-label font-bold tracking-widest text-xs mb-4 block uppercase">
-                  The Portfolio
+                  Το Αρχείο
                 </span>
                 <h2 className="text-4xl md:text-5xl font-headline font-bold tracking-tight text-on-background">
-                  Featured Destinations
+                  Επιλεγμένοι Προορισμοί
                 </h2>
               </div>
               <p className="text-primary max-w-xs font-body italic border-l-2 border-outline-variant pl-4">
-                A selection of places that stayed with me long after I left
-                their borders.
+                Μια επιλογή από μέρη που έμειναν μαζί μου πολύ αφότου τα εγκατέλειψα.
               </p>
             </div>
           </FadeUp>
 
           {destinations.length === 0 ? (
             <p className="text-center py-16 text-outline font-body italic">
-              No destinations yet — add some in the admin!
+              Δεν υπάρχουν προορισμοί ακόμα — προσθέστε κάποιους από τον πίνακα διαχείρισης!
             </p>
           ) : (
             <FadeUp delay={0.1}>
@@ -90,9 +89,9 @@ export default async function HomePage() {
         </section>
 
         <PortfolioGallery
-          title="Explore Our Visual Journal"
+          title="Εξερευνήστε το Οπτικό μας Ημερολόγιο"
           archiveButton={{
-            text: "Browse all photos",
+            text: "Δείτε όλες τις φωτογραφίες",
             href: "/gallery",
           }}
           images={marqueeImages}
@@ -103,18 +102,16 @@ export default async function HomePage() {
           <div className="max-w-3xl mx-auto px-8 text-center">
             <FadeUp>
               <h2 className="text-4xl md:text-5xl font-headline font-bold tracking-tight text-on-background mb-6 italic">
-                Every Journey Tells a Story
+                Κάθε Ταξίδι Λέει μια Ιστορία
               </h2>
               <p className="text-primary font-body text-lg mb-10">
-                Browse the full collection of destinations — each one documented
-                with photography, guides, and the quiet details that make a
-                place unforgettable.
+                Περιηγηθείτε στη συλλογή των προορισμών — κάθε ένας τεκμηριωμένος με φωτογραφίες, οδηγούς και τις λεπτές λεπτομέρειες που κάνουν έναν τόπο αξέχαστο.
               </p>
               <Link
                 href="/destinations"
                 className="inline-flex items-center gap-2 bg-secondary text-on-secondary px-8 py-4 rounded-lg font-headline font-bold hover:bg-secondary/90 transition-colors"
               >
-                Explore all destinations
+                Εξερευνήστε όλους τους προορισμούς
                 <span className="material-symbols-outlined text-base">
                   arrow_forward
                 </span>

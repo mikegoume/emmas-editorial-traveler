@@ -53,10 +53,10 @@ export default function DestinationView({
             {/* Sticky Sidebar */}
             <div className="lg:col-span-4 lg:sticky lg:top-32 self-start">
               <span className="font-label text-secondary text-xs font-bold tracking-widest mb-4 block">
-                DESTINATION GUIDE
+                ΟΔΗΓΟΣ ΠΡΟΟΡΙΣΜΟΥ
               </span>
               <h2 className="font-headline text-3xl font-bold text-on-surface mb-6 tracking-tight">
-                About {destination.title}
+                Σχετικά με {destination.title}
               </h2>
               <div className="space-y-4 mb-8">
                 {region && (
@@ -77,7 +77,7 @@ export default function DestinationView({
                     <span className="material-symbols-outlined text-secondary">
                       calendar_today
                     </span>
-                    <span>Visited: {formatDate(destination.visit_date)}</span>
+                    <span>Επίσκεψη: {formatDate(destination.visit_date)}</span>
                   </div>
                 )}
                 {documentUrl && (
@@ -85,7 +85,7 @@ export default function DestinationView({
                     <span className="material-symbols-outlined text-secondary">
                       description
                     </span>
-                    <span>Destination guide attached</span>
+                    <span>Οδηγός προορισμού επισυνημμένος</span>
                   </div>
                 )}
               </div>
@@ -94,7 +94,7 @@ export default function DestinationView({
                 className="inline-flex items-center gap-2 text-secondary font-bold font-headline hover:gap-3 transition-all"
               >
                 <span className="material-symbols-outlined">arrow_back</span>
-                All Destinations
+                Όλοι οι Προορισμοί
               </Link>
             </div>
 
@@ -116,7 +116,7 @@ export default function DestinationView({
                     <span className="material-symbols-outlined text-secondary">
                       menu_book
                     </span>
-                    Full Destination Guide
+                    Πλήρης Οδηγός Προορισμού
                   </h3>
                   <DocxViewer url={documentUrl} />
                 </div>

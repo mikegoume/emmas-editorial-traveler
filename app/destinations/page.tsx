@@ -42,16 +42,14 @@ export default async function DestinationsPage() {
               <div className="max-w-3xl">
                 <span className="inline-block px-4 py-1 bg-secondary text-on-secondary rounded-full text-xs font-label uppercase tracking-widest mb-6">
                   {destinations.length}{" "}
-                  {destinations.length === 1 ? "Destination" : "Destinations"} ·{" "}
-                  {regions.length} {regions.length === 1 ? "Region" : "Regions"}
+                  {destinations.length === 1 ? "Προορισμός" : "Προορισμοί"} ·{" "}
+                  {regions.length} {regions.length === 1 ? "Περιοχή" : "Περιοχές"}
                 </span>
                 <h1 className="text-5xl md:text-7xl font-headline font-extrabold text-white tracking-tighter mb-6">
-                  Explore the World
+                  Εξερευνήστε τον Κόσμο
                 </h1>
                 <p className="text-lg md:text-xl text-white/90 font-body leading-relaxed max-w-2xl">
-                  A curated archive of destinations — from the sun-drenched
-                  coasts of the Mediterranean to the rugged peaks of the Alps.
-                  Every place here was visited, photographed, and lived in.
+                  Ένα επιμελημένο αρχείο προορισμών — από τις ηλιόλουστες ακτές της Μεσογείου έως τις άγριες κορυφές των Άλπεων. Κάθε μέρος εδώ έχει επισκεφθεί, φωτογραφηθεί και ζηθεί.
                 </p>
               </div>
             </div>
@@ -64,10 +62,10 @@ export default async function DestinationsPage() {
             <div className="flex flex-col md:flex-row md:items-end justify-between gap-8 mb-12">
               <div>
                 <span className="text-secondary font-label font-bold tracking-widest text-xs mb-3 block uppercase">
-                  Browse by Region
+                  Αναζήτηση ανά Περιοχή
                 </span>
                 <h2 className="text-3xl md:text-4xl font-headline font-bold text-on-surface tracking-tight">
-                  Choose your continent
+                  Επιλέξτε την ήπειρό σας
                 </h2>
               </div>
             </div>
@@ -85,8 +83,8 @@ export default async function DestinationsPage() {
                   <p className="text-sm text-outline group-hover:text-on-secondary-container/70 font-label">
                     {region.destinations.length}{" "}
                     {region.destinations.length === 1
-                      ? "destination"
-                      : "destinations"}
+                      ? "προορισμός"
+                      : "προορισμοί"}
                   </p>
                   <span className="material-symbols-outlined text-secondary group-hover:text-on-secondary-container mt-4 block transition-transform group-hover:translate-x-1">
                     arrow_forward
@@ -102,13 +100,13 @@ export default async function DestinationsPage() {
           <div className="flex flex-col md:flex-row md:items-end justify-between gap-8 mb-12">
             <div>
               <span className="text-secondary font-label font-bold tracking-widest text-xs mb-3 block uppercase">
-                The Archive
+                Το Αρχείο
               </span>
               <h2 className="text-3xl md:text-4xl font-headline font-bold text-on-surface tracking-tight">
-                Every Destination
+                Κάθε Προορισμός
               </h2>
               <p className="text-outline mt-2 font-body">
-                The complete archive — every place that&apos;s been documented.
+                Το πλήρες αρχείο — κάθε τόπος που έχει τεκμηριωθεί.
               </p>
             </div>
           </div>
@@ -116,10 +114,10 @@ export default async function DestinationsPage() {
           {destinations.length === 0 ? (
             <div className="text-center py-32 bg-surface-container-low rounded-lg">
               <p className="text-outline font-body italic mb-2">
-                No destinations published yet.
+                Δεν υπάρχουν δημοσιευμένοι προορισμοί ακόμα.
               </p>
               <p className="text-sm text-outline-variant font-label">
-                Add some in the admin → Destinations → New Destination.
+                Προσθέστε κάποιους στον πίνακα διαχείρισης → Προορισμοί → Νέος Προορισμός.
               </p>
             </div>
           ) : (
@@ -171,21 +169,19 @@ export default async function DestinationsPage() {
           <div className="relative bg-secondary-container rounded-lg overflow-hidden p-12 md:p-24 text-center">
             <div className="relative z-10 max-w-2xl mx-auto">
               <h2 className="text-3xl md:text-5xl font-headline font-extrabold text-on-secondary-container mb-6 tracking-tighter">
-                Stay Inspired
+                Μείνετε Εμπνευσμένοι
               </h2>
               <p className="text-on-secondary-container/80 text-lg mb-10 font-body">
-                Join our weekly newsletter for curated travel itineraries,
-                hidden gems, and exclusive editorial stories delivered to your
-                inbox.
+                Εγγραφείτε στο εβδομαδιαίο newsletter για επιλεγμένα ταξιδιωτικά δρομολόγια, κρυφά στολίδια και αποκλειστικές ιστορίες που παραδίδονται στα εισερχόμενά σας.
               </p>
               <div className="flex flex-col md:flex-row gap-4 max-w-md mx-auto">
                 <input
                   className="flex-1 bg-surface-container-lowest/50 border-none rounded-full px-6 py-4 text-on-surface focus:ring-2 focus:ring-secondary outline-none placeholder:text-outline-variant"
-                  placeholder="Your email address"
+                  placeholder="Η διεύθυνση email σας"
                   type="email"
                 />
                 <button className="bg-secondary text-on-secondary px-8 py-4 rounded-full font-label text-sm tracking-widest uppercase hover:scale-105 transition-transform">
-                  Subscribe
+                  Εγγραφή
                 </button>
               </div>
             </div>

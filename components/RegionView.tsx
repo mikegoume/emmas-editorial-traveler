@@ -31,7 +31,7 @@ export default function RegionView({
             <div className="absolute inset-0 bg-black/30 flex flex-col justify-end p-8 md:p-16">
               <div className="max-w-3xl">
                 <span className="inline-block px-4 py-1 bg-secondary text-on-secondary rounded-full text-xs font-label uppercase tracking-widest mb-6">
-                  Region
+                  Περιοχή
                 </span>
                 <h1 className="text-5xl md:text-7xl font-headline font-extrabold text-white tracking-tighter mb-6">
                   {region.name}
@@ -43,7 +43,7 @@ export default function RegionView({
                 )}
                 <p className="text-sm text-white/70 font-label mt-4 uppercase tracking-widest">
                   {destinations.length}{" "}
-                  {destinations.length === 1 ? "Destination" : "Destinations"}
+                  {destinations.length === 1 ? "Προορισμός" : "Προορισμοί"}
                 </p>
               </div>
             </div>
@@ -53,12 +53,12 @@ export default function RegionView({
         {/* Destinations Grid */}
         <section className="max-w-7xl mx-auto px-8 py-16">
           <h2 className="text-3xl md:text-4xl font-headline font-bold text-on-surface tracking-tight mb-12">
-            Explore {region.name}
+            Εξερευνήστε {region.name}
           </h2>
 
           {destinations.length === 0 ? (
             <p className="text-center py-16 text-outline font-body italic">
-              No destinations published in this region yet.
+              Δεν υπάρχουν δημοσιευμένοι προορισμοί σε αυτή την περιοχή ακόμα.
             </p>
           ) : (
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">

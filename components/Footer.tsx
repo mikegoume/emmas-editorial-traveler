@@ -9,8 +9,7 @@ export default function Footer() {
             The Editorial Traveler
           </div>
           <p className="text-zinc-500 dark:text-zinc-500 font-body text-sm max-w-sm leading-relaxed mb-8">
-            A digital journal celebrating the art of slow travel and high-end
-            editorial photography. Join our community of mindful explorers.
+            Ένα ψηφιακό ημερολόγιο που γιορτάζει την τέχνη του αργού ταξιδιού και της editorial φωτογραφίας. Γίνετε μέλος της κοινότητάς μας.
           </p>
           <div className="flex gap-6">
             <a
@@ -36,7 +35,7 @@ export default function Footer() {
 
         <div>
           <h5 className="font-headline font-bold text-on-background mb-6">
-            Explore
+            Εξερευνήστε
           </h5>
           <ul className="space-y-4 font-body text-sm tracking-wide">
             <li>
@@ -44,7 +43,7 @@ export default function Footer() {
                 href="/destinations"
                 className="text-zinc-500 hover:text-emerald-600 transition-colors"
               >
-                Destinations
+                Προορισμοί
               </Link>
             </li>
             <li>
@@ -60,7 +59,7 @@ export default function Footer() {
                 href="/about#contact"
                 className="text-zinc-500 hover:text-emerald-600 transition-colors"
               >
-                Contact
+                Επικοινωνία
               </Link>
             </li>
             <li>
@@ -68,7 +67,7 @@ export default function Footer() {
                 href="/about"
                 className="text-zinc-500 hover:text-emerald-600 transition-colors"
               >
-                About Me
+                Σχετικά
               </Link>
             </li>
           </ul>
@@ -76,7 +75,7 @@ export default function Footer() {
 
         <div>
           <h5 className="font-headline font-bold text-on-background mb-6">
-            Legal
+            Νομικά
           </h5>
           <ul className="space-y-4 font-body text-sm tracking-wide">
             <li>
@@ -84,7 +83,7 @@ export default function Footer() {
                 href="#"
                 className="text-zinc-500 hover:text-emerald-600 transition-colors"
               >
-                Privacy Policy
+                Πολιτική Απορρήτου
               </a>
             </li>
             <li>
@@ -92,7 +91,7 @@ export default function Footer() {
                 href="#"
                 className="text-zinc-500 hover:text-emerald-600 transition-colors"
               >
-                Terms of Service
+                Όροι Χρήσης
               </a>
             </li>
           </ul>
@@ -102,10 +101,10 @@ export default function Footer() {
       <div className="max-w-7xl mx-auto px-12 pb-12">
         <div className="border-t border-outline-variant/10 pt-8 flex flex-col md:flex-row justify-between items-center gap-4">
           <span className="text-zinc-500 font-body text-sm">
-            © 2024 The Editorial Traveler. All rights reserved.
+            © 2024 The Editorial Traveler. Όλα τα δικαιώματα διατηρούνται.
           </span>
           <span className="text-emerald-700 font-semibold font-body text-sm">
-            Curated with Intention.
+            Επιμελημένο με Πρόθεση.
           </span>
         </div>
       </div>

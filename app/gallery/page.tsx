@@ -26,10 +26,10 @@ export default async function GalleryPage() {
               photo_library
             </span>
             <h2 className="font-headline text-2xl font-bold text-on-background mb-2">
-              Gallery coming soon
+              Η γκαλερί έρχεται σύντομα
             </h2>
             <p className="text-on-surface-variant font-body">
-              Images will appear here once uploaded in the admin.
+              Οι εικόνες θα εμφανιστούν εδώ μόλις ανεβαστούν στον πίνακα διαχείρισης.
             </p>
           </div>
         </div>
@@ -52,8 +52,8 @@ export default async function GalleryPage() {
       <div id="bento-gallery">
         <InteractiveImageBentoGallery
           imageItems={bentoItems}
-          title="Curated Collection"
-          description="Landmarks captured at the edge of the world. Drag to explore, click to open."
+          title="Επιλεγμένη Συλλογή"
+          description="Τοπόσημα που αποτυπώθηκαν στα άκρα του κόσμου. Σύρετε για εξερεύνηση, κάντε κλικ για άνοιγμα."
         />
       </div>
     </>

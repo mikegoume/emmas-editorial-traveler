@@ -87,7 +87,7 @@ export default function NavLinks({
       {/* ── Desktop nav ──────────────────────────────────────────────────────── */}
       <div className="hidden md:flex items-center space-x-8 font-headline font-medium tracking-tight">
         <Link href="/" className={linkClass(isActive("/"))}>
-          Home
+          Αρχική
         </Link>
 
         {/* Destinations with hover dropdown */}
@@ -100,7 +100,7 @@ export default function NavLinks({
             href="/destinations"
             className={`${linkClass(isActive("/destinations"))} flex items-center gap-1`}
           >
-            Destinations
+            Προορισμοί
             <span
               className={`material-symbols-outlined text-base transition-transform duration-300 ${
                 destOpen ? "rotate-180" : ""
@@ -120,7 +120,7 @@ export default function NavLinks({
             <div className="bg-surface-container-lowest dark:bg-zinc-900 rounded-lg shadow-2xl border border-outline-variant/15 overflow-hidden min-w-[640px]">
               {regions.length === 0 ? (
                 <div className="p-8 text-center text-outline font-body italic text-sm">
-                  No destinations yet.
+                  Δεν υπάρχουν προορισμοί ακόμα.
                 </div>
               ) : (
                 <div className="grid grid-cols-2 lg:grid-cols-3 gap-x-2 p-6">
@@ -172,7 +172,7 @@ export default function NavLinks({
                 href="/destinations"
                 className="flex items-center justify-between bg-surface-container-low px-6 py-4 text-sm font-headline font-bold text-secondary hover:bg-secondary-container transition-colors"
               >
-                <span>View All Destinations</span>
+                <span>Όλοι οι Προορισμοί</span>
                 <span className="material-symbols-outlined text-base">
                   arrow_forward
                 </span>
@@ -182,17 +182,17 @@ export default function NavLinks({
         </div>
 
         <Link href="/about" className={linkClass(isActive("/about"))}>
-          About
+          Σχετικά
         </Link>
         <Link href="/gallery" className={linkClass(isActive("/gallery"))}>
-          Gallery
+          Γκαλερί
         </Link>
       </div>
 
       {/* ── Hamburger button (mobile only) ───────────────────────────────────── */}
       <button
         className="md:hidden flex flex-col justify-center items-center w-8 h-8 gap-[5px]"
-        aria-label={mobileOpen ? "Close menu" : "Open menu"}
+        aria-label={mobileOpen ? "Κλείσιμο μενού" : "Άνοιγμα μενού"}
         onClick={() => setMobileOpen((o) => !o)}
       >
         <motion.span
@@ -248,7 +248,7 @@ export default function NavLinks({
                     <button
                       onClick={() => setMobileOpen(false)}
                       className="material-symbols-outlined text-zinc-400 hover:text-zinc-700 dark:hover:text-zinc-200 transition-colors"
-                      aria-label="Close menu"
+                      aria-label="Κλείσιμο μενού"
                     >
                       close
                     </button>
@@ -274,7 +274,7 @@ export default function NavLinks({
                         <span className="material-symbols-outlined text-[22px]">
                           home
                         </span>
-                        Home
+                        Αρχική
                       </Link>
                     </motion.div>
 
@@ -292,7 +292,7 @@ export default function NavLinks({
                           <span className="material-symbols-outlined text-[22px]">
                             explore
                           </span>
-                          Destinations
+                          Προορισμοί
                         </span>
                         <motion.span
                           animate={{ rotate: mobileDestOpen ? 180 : 0 }}
@@ -330,7 +330,7 @@ export default function NavLinks({
                             <div className="ml-4 mt-1 mb-2 pl-4 border-l-2 border-emerald-200 dark:border-emerald-800 space-y-4 py-2">
                               {regions.length === 0 ? (
                                 <p className="text-sm text-zinc-400 italic px-2">
-                                  No destinations yet.
+                                  Δεν υπάρχουν προορισμοί ακόμα.
                                 </p>
                               ) : (
                                 regions.map((region) => (
@@ -373,7 +373,7 @@ export default function NavLinks({
                                 href="/destinations"
                                 className="flex items-center gap-2 px-2 py-2 text-sm font-headline font-bold text-emerald-700 dark:text-emerald-400 hover:underline"
                               >
-                                View all destinations
+                                Όλοι οι Προορισμοί
                                 <span className="material-symbols-outlined text-base">
                                   arrow_forward
                                 </span>
@@ -397,7 +397,7 @@ export default function NavLinks({
                         <span className="material-symbols-outlined text-[22px]">
                           person
                         </span>
-                        About
+                        Σχετικά
                       </Link>
                     </motion.div>
 
@@ -414,7 +414,7 @@ export default function NavLinks({
                         <span className="material-symbols-outlined text-[22px]">
                           photo_library
                         </span>
-                        Gallery
+                        Γκαλερί
                       </Link>
                     </motion.div>
                   </motion.nav>
@@ -422,7 +422,7 @@ export default function NavLinks({
                   {/* Panel footer */}
                   <div className="px-6 py-5 border-t border-outline-variant/15">
                     <p className="text-xs font-body text-zinc-400 dark:text-zinc-500 tracking-wide">
-                      Travel stories & editorial guides
+                      Ταξιδιωτικές ιστορίες & editorial οδηγοί
                     </p>
                   </div>
                 </motion.div>
