@@ -1,6 +1,6 @@
 import TopNavBar from "@/components/TopNavBar";
 import InteractiveImageBentoGallery from "@/components/ui/bento-gallery";
-import { getGalleryImages } from "@/lib/db";
+import { getGalleryImages, getOptimizedImageUrl } from "@/lib/db";
 
 export const revalidate = 60;
 
@@ -41,7 +41,8 @@ export default async function GalleryPage() {
     id: img.id,
     title: img.alt,
     desc: img.caption ?? "",
-    url: img.url,
+    url: getOptimizedImageUrl(img.url, { width: 600, quality: 75 }),
+    fullUrl: getOptimizedImageUrl(img.url, { width: 1600, quality: 90 }),
     span: SPANS[i % SPANS.length],
   }));
 

@@ -16,7 +16,8 @@ export type BentoImageItem = {
   id: number | string;
   title: string;
   desc: string;
-  url: string;
+  url: string;       // thumbnail (optimised, smaller)
+  fullUrl?: string;  // lightbox (full quality)
   span: string;
 };
 
@@ -98,7 +99,7 @@ const ImageModal = ({
       onClick={(e) => e.stopPropagation()}
     >
       <img
-        src={item.url}
+        src={item.fullUrl ?? item.url}
         alt={item.title}
         className="h-auto max-h-[85vh] w-full rounded-2xl object-contain shadow-2xl"
       />

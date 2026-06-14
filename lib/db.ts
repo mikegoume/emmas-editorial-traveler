@@ -185,3 +185,11 @@ export async function getAllDestinationSlugs(): Promise<string[]> {
     .order("created_at", { ascending: false });
   return (data ?? []).map((r) => r.slug);
 }
+
+export async function getAllRegionSlugs(): Promise<string[]> {
+  const { data } = await createAnonClient()
+    .from("regions")
+    .select("slug")
+    .order("name");
+  return (data ?? []).map((r) => r.slug);
+}

@@ -2,17 +2,21 @@ import DestinationView from "@/components/DestinationView";
 import RegionView from "@/components/RegionView";
 import {
   getAllDestinationSlugs,
+  getAllRegionSlugs,
   getDestinationBySlug,
   getRegionBySlug,
   stripHtml,
 } from "@/lib/db";
 import { notFound } from "next/navigation";
 
-export const revalidate = 60;
+export const revalidate = 3600;
 
 export async function generateStaticParams() {
-  const slugs = await getAllDestinationSlugs();
-  return slugs.map((slug) => ({ slug }));
+  const [destSlugs, regionSlugs] = await Promise.all([
+    getAllDestinationSlugs(),
+    getAllRegionSlugs(),
+  ]);
+  return [...destSlugs, ...regionSlugs].map((slug) => ({ slug }));
 }
 
 export async function generateMetadata({

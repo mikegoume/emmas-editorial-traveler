@@ -194,17 +194,12 @@ const ScrollExpandMedia = ({
       <section className="relative flex flex-col items-center justify-start min-h-[100dvh]">
         <div className="relative w-full flex flex-col items-center min-h-[100dvh]">
           <motion.div
-            className="absolute inset-0 z-0 h-full"
+            className="absolute inset-0 z-0 h-full bg-cover bg-center"
+            style={{ backgroundImage: `url(${bgImageSrc})` }}
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 - scrollProgress }}
             transition={{ duration: 0.1 }}
           >
-            <img
-              src={bgImageSrc}
-              alt="Background"
-              className="w-screen h-screen object-cover object-center"
-              fetchPriority="high"
-            />
             <div className="absolute inset-0 bg-black/20" />
           </motion.div>
 
