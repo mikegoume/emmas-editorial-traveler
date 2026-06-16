@@ -17,7 +17,7 @@ const manrope = Manrope({
 });
 
 export const metadata: Metadata = {
-  title: "The Editorial Traveler",
+  title: "Travel With Emma",
   description:
     "A digital journal celebrating the art of slow travel and high-end editorial photography.",
 };

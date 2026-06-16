@@ -1,6 +1,6 @@
-# The Editorial Traveler — Next.js Frontend
+# Travel With Emma — Next.js Frontend
 
-A Next.js 14 (App Router) frontend for the Editorial Traveler WordPress site, converted from the Google Stitch design. Currently uses mock data — ready to be wired up to the WordPress REST API or WPGraphQL.
+A Next.js 14 (App Router) frontend for Travel With Emma WordPress site, converted from the Google Stitch design. Currently uses mock data — ready to be wired up to the WordPress REST API or WPGraphQL.
 
 ## Stack
 

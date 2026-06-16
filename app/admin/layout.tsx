@@ -51,7 +51,7 @@ export default function AdminLayout({
       <div className="px-6 py-6 border-b border-outline-variant/15 flex items-center justify-between">
         <Link href="/" className="block">
           <p className="font-headline font-extrabold text-sm tracking-tighter text-on-background">
-            The Editorial Traveler
+            Travel With Emma
           </p>
           <p className="text-xs text-outline font-label mt-0.5">Admin</p>
         </Link>
@@ -112,7 +112,7 @@ export default function AdminLayout({
           <span className="material-symbols-outlined text-xl">menu</span>
         </button>
         <p className="font-headline font-extrabold text-sm tracking-tighter text-on-background">
-          The Editorial Traveler
+          Travel With Emma
           <span className="text-outline font-label font-normal ml-1.5 text-xs">
             Admin
           </span>

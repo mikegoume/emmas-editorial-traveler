@@ -12,7 +12,7 @@ export default async function TopNavBar() {
           href="/"
           className="text-xl font-bold tracking-tighter text-zinc-900 dark:text-white font-headline shrink-0"
         >
-          The Editorial Traveler
+          Travel With Emma
         </Link>
 
         <NavLinks regions={regions} />

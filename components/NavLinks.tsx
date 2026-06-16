@@ -243,7 +243,7 @@ export default function NavLinks({
                   {/* Panel header */}
                   <div className="flex items-center justify-between px-6 py-5 border-b border-outline-variant/15">
                     <span className="font-headline font-bold text-base tracking-tight text-zinc-900 dark:text-white">
-                      The Editorial Traveler
+                      Travel With Emma
                     </span>
                     <button
                       onClick={() => setMobileOpen(false)}

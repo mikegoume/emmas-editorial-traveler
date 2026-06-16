@@ -40,7 +40,7 @@ function LoginForm() {
       <div className="w-full max-w-sm">
         <div className="text-center mb-10">
           <h1 className="font-headline text-3xl font-extrabold tracking-tighter text-on-background mb-1">
-            The Editorial Traveler
+            Travel With Emma
           </h1>
           <p className="text-outline font-body text-sm">Πρόσβαση διαχειριστή</p>
         </div>

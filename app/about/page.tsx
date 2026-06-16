@@ -17,7 +17,7 @@ const DEFAULT_HEADING = "Curating the world, one story at a time.";
 
 const DEFAULT_BIO = [
   "Travel is more than a movement between coordinates; it is a discipline of observation. My journey began not with a suitcase, but with a camera and an insatiable curiosity for the quiet corners of the world that rarely make it to the front of a brochure.",
-  "As a former architectural journalist, I spent years documenting how structures define our lives. Now, I apply that same editorial lens to the world at large. Through The Editorial Traveler, I curate experiences that prioritize depth over speed and atmosphere over checkboxes.",
+  "As a former architectural journalist, I spent years documenting how structures define our lives. Now, I apply that same editorial lens to the world at large. Through Travel With Emma, I curate experiences that prioritize depth over speed and atmosphere over checkboxes.",
   "From the misty peaks of the Alentejo to the hidden tea houses of Kyoto, my goal is to bridge the gap between high-end aesthetics and raw, authentic human connection. We don't just visit places; we inhabit them, if only for a moment.",
 ];
 

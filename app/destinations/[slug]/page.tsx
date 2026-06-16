@@ -29,7 +29,7 @@ export async function generateMetadata({
   const destination = await getDestinationBySlug(decodedSlug);
   if (destination) {
     return {
-      title: `${destination.title} | The Editorial Traveler`,
+      title: `${destination.title} | Travel With Emma`,
       description:
         destination.excerpt ?? stripHtml(destination.content).slice(0, 160),
     };
@@ -37,7 +37,7 @@ export async function generateMetadata({
   const region = await getRegionBySlug(decodedSlug);
   if (region) {
     return {
-      title: `${region.name} | The Editorial Traveler`,
+      title: `${region.name} | Travel With Emma`,
       description:
         region.description ?? `Explore destinations in ${region.name}.`,
     };

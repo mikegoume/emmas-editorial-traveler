@@ -6,10 +6,11 @@ export default function Footer() {
       <div className="grid grid-cols-1 md:grid-cols-4 gap-12 px-12 py-20 max-w-7xl mx-auto">
         <div className="md:col-span-2">
           <div className="text-lg font-bold text-zinc-900 dark:text-white font-headline mb-6">
-            The Editorial Traveler
+            Travel With Emma
           </div>
           <p className="text-zinc-500 dark:text-zinc-500 font-body text-sm max-w-sm leading-relaxed mb-8">
-            Ένα ψηφιακό ημερολόγιο που γιορτάζει την τέχνη του αργού ταξιδιού και της editorial φωτογραφίας. Γίνετε μέλος της κοινότητάς μας.
+            Ένα ψηφιακό ημερολόγιο που γιορτάζει την τέχνη του αργού ταξιδιού
+            και της editorial φωτογραφίας. Γίνετε μέλος της κοινότητάς μας.
           </p>
           <div className="flex gap-6">
             <a
@@ -99,13 +100,19 @@ export default function Footer() {
       </div>
 
       <div className="max-w-7xl mx-auto px-12 pb-12">
-        <div className="border-t border-outline-variant/10 pt-8 flex flex-col md:flex-row justify-between items-center gap-4">
-          <span className="text-zinc-500 font-body text-sm">
-            © 2024 The Editorial Traveler. Όλα τα δικαιώματα διατηρούνται.
-          </span>
-          <span className="text-emerald-700 font-semibold font-body text-sm">
-            Επιμελημένο με Πρόθεση.
-          </span>
+        <div className="border-t border-outline-variant/10 pt-8 grid grid-cols-1 md:grid-cols-3 gap-6 items-start">
+          <div>
+            <p className="text-zinc-400 font-body text-xs uppercase tracking-widest mb-1">Company</p>
+            <span className="text-zinc-600 dark:text-zinc-400 font-body text-sm font-medium">Travel With Emma</span>
+          </div>
+          <div className="text-left md:text-center">
+            <p className="text-zinc-500 font-body text-sm">© 2025 All Rights Reserved.</p>
+            <p className="text-zinc-400 font-body text-xs mt-1">Design &amp; Development — Mike Goumenakis</p>
+          </div>
+          <div className="text-left md:text-right">
+            <p className="text-zinc-400 font-body text-xs uppercase tracking-widest mb-1">Company Address</p>
+            <span className="text-zinc-600 dark:text-zinc-400 font-body text-sm">Heraklion, Crete</span>
+          </div>
         </div>
       </div>
     </footer>

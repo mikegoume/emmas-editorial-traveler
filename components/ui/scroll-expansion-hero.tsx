@@ -59,6 +59,9 @@ const ScrollExpandMedia = ({
     } else {
       lenis?.start();
     }
+    return () => {
+      lenis?.start();
+    };
   }, [mediaFullyExpanded, lenis]);
 
   useEffect(() => {
@@ -183,8 +186,8 @@ const ScrollExpandMedia = ({
   const mediaHeight = 400 + scrollProgress * (isMobileState ? 200 : 400);
   const textTranslateX = scrollProgress * (isMobileState ? 180 : 150);
 
-  const firstWord = title ? title.split(" ")[0] : "";
-  const restOfTitle = title ? title.split(" ").slice(1).join(" ") : "";
+  const firstWord = title ? title.split(" ").slice(0, 3).join(" ") : "";
+  const restOfTitle = title ? title.split(" ").slice(3).join(" ") : "";
 
   return (
     <div

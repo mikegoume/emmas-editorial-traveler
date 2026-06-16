@@ -27,13 +27,19 @@ export default async function HomePage() {
     (destinations[0]
       ? getImageUrl(destinations[0])
       : "https://images.unsplash.com/photo-1476514525535-07fb3b4ae5f1?q=80&w=1920&auto=format");
-  const heroImage = getOptimizedImageUrl(rawHeroImage, { width: 1920, quality: 85 });
+  const heroImage = getOptimizedImageUrl(rawHeroImage, {
+    width: 1920,
+    quality: 85,
+  });
 
   const destinationData = destinations.map((dest) => ({
     id: dest.id,
     title: dest.title,
     excerpt: dest.excerpt ?? null,
-    imgSrc: getOptimizedImageUrl(getImageUrl(dest), { width: 800, quality: 75 }),
+    imgSrc: getOptimizedImageUrl(getImageUrl(dest), {
+      width: 800,
+      quality: 75,
+    }),
     slug: dest.slug,
   }));
 
@@ -53,7 +59,7 @@ export default async function HomePage() {
           mediaType="image"
           mediaSrc={heroImage}
           bgImageSrc={heroImage}
-          title="Σιωπηλές Στιγμές"
+          title="Your next story starts here"
           date="Ίδρ. 2024"
           scrollToExpand="Κυλίστε για εξερεύνηση"
           textBlend
@@ -72,14 +78,16 @@ export default async function HomePage() {
                 </h2>
               </div>
               <p className="text-primary max-w-xs font-body italic border-l-2 border-outline-variant pl-4">
-                Μια επιλογή από μέρη που έμειναν μαζί μου πολύ αφότου τα εγκατέλειψα.
+                Μια επιλογή από μέρη που έμειναν μαζί μου πολύ αφότου τα
+                εγκατέλειψα.
               </p>
             </div>
           </FadeUp>
 
           {destinations.length === 0 ? (
             <p className="text-center py-16 text-outline font-body italic">
-              Δεν υπάρχουν προορισμοί ακόμα — προσθέστε κάποιους από τον πίνακα διαχείρισης!
+              Δεν υπάρχουν προορισμοί ακόμα — προσθέστε κάποιους από τον πίνακα
+              διαχείρισης!
             </p>
           ) : (
             <FadeUp delay={0.1}>
@@ -105,7 +113,9 @@ export default async function HomePage() {
                 Κάθε Ταξίδι Λέει μια Ιστορία
               </h2>
               <p className="text-primary font-body text-lg mb-10">
-                Περιηγηθείτε στη συλλογή των προορισμών — κάθε ένας τεκμηριωμένος με φωτογραφίες, οδηγούς και τις λεπτές λεπτομέρειες που κάνουν έναν τόπο αξέχαστο.
+                Περιηγηθείτε στη συλλογή των προορισμών — κάθε ένας
+                τεκμηριωμένος με φωτογραφίες, οδηγούς και τις λεπτές
+                λεπτομέρειες που κάνουν έναν τόπο αξέχαστο.
               </p>
               <Link
                 href="/destinations"
