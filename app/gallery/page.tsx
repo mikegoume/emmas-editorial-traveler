@@ -59,7 +59,12 @@ export default async function GalleryPage() {
     url: getOptimizedImageUrl(img.url, { width: 600, quality: 75 }),
     fullUrl: getOptimizedImageUrl(img.url, { width: 1600, quality: 90 }),
     span: SPANS[i % SPANS.length],
+    category: img.category ?? "",
   }));
+
+  const categories = Array.from(
+    new Set(bentoItems.map((i) => i.category).filter(Boolean)),
+  ).sort() as string[];
 
   return (
     <>
@@ -67,6 +72,7 @@ export default async function GalleryPage() {
       <div id="bento-gallery">
         <InteractiveImageBentoGallery
           imageItems={bentoItems}
+          categories={categories}
           title="Επιλεγμένη Συλλογή"
           description="Τοπόσημα που αποτυπώθηκαν στα άκρα του κόσμου. Σύρετε για εξερεύνηση, κάντε κλικ για άνοιγμα."
         />

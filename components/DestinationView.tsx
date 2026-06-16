@@ -5,6 +5,14 @@ import { formatDate, getImageUrl, getOptimizedImageUrl } from "@/lib/db";
 import type { Destination } from "@/lib/types";
 import Link from "next/link";
 
+// Strip img tags whose src points to a local filesystem path (pasted from editor without upload)
+function sanitizeContentHtml(html: string): string {
+  return html.replace(
+    /<img[^>]*\bsrc="(?:\/Users\/|\/home\/|C:\\|file:\/\/)[^"]*"[^>]*\/?>/gi,
+    "",
+  );
+}
+
 export default function DestinationView({
   destination,
 }: {
@@ -106,7 +114,7 @@ export default function DestinationView({
                     prose-headings:font-headline prose-headings:text-on-surface prose-headings:font-bold
                     prose-a:text-secondary prose-a:no-underline hover:prose-a:underline
                     prose-img:rounded-lg prose-img:shadow-md"
-                  dangerouslySetInnerHTML={{ __html: destination.content }}
+                  dangerouslySetInnerHTML={{ __html: sanitizeContentHtml(destination.content) }}
                 />
               )}
 

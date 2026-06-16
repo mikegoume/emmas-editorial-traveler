@@ -10,6 +10,7 @@ export default function AdminGalleryPage() {
   const [loading, setLoading] = useState(true);
   const [progress, setProgress] = useState<{ done: number; total: number } | null>(null);
   const [errors, setErrors] = useState<string[]>([]);
+  const [batchCategory, setBatchCategory] = useState("");
   const fileInputRef = useRef<HTMLInputElement>(null);
 
   async function fetchImages() {
@@ -60,6 +61,7 @@ export default function AdminGalleryPage() {
         url: publicUrl,
         alt: autoAlt,
         caption: null,
+        category: batchCategory.trim() || null,
         sort_order: sortBase++,
       });
 
@@ -82,6 +84,18 @@ export default function AdminGalleryPage() {
     fetchImages();
   }
 
+  async function handleCategoryBlur(img: GalleryImage, newCategory: string) {
+    const value = newCategory.trim() || null;
+    if (value === img.category) return;
+    await supabase
+      .from("gallery_images")
+      .update({ category: value })
+      .eq("id", img.id);
+    setImages((prev) =>
+      prev.map((i) => (i.id === img.id ? { ...i, category: value } : i)),
+    );
+  }
+
   const uploading = progress !== null;
 
   return (
@@ -102,6 +116,21 @@ export default function AdminGalleryPage() {
         <h2 className="font-headline font-bold text-on-surface mb-4">
           Add images
         </h2>
+
+        {/* Batch category */}
+        <div className="mb-4">
+          <label className="text-xs font-bold uppercase tracking-wider text-on-surface-variant font-label block mb-1">
+            Category for this batch (optional)
+          </label>
+          <input
+            type="text"
+            value={batchCategory}
+            onChange={(e) => setBatchCategory(e.target.value)}
+            placeholder="e.g. Greece, Italy, Portraits…"
+            disabled={uploading}
+            className="w-full max-w-xs text-sm bg-surface-container-low border border-outline-variant/20 rounded-lg px-3 py-2 text-on-surface placeholder:text-outline-variant focus:outline-none focus:ring-1 focus:ring-secondary"
+          />
+        </div>
 
         <input
           type="file"
@@ -178,33 +207,46 @@ export default function AdminGalleryPage() {
           {images.map((img) => (
             <div
               key={img.id}
-              className="relative group rounded-lg overflow-hidden aspect-square bg-surface-container-low"
+              className="relative group rounded-lg overflow-visible bg-surface-container-low"
             >
-              <img
-                src={img.url}
-                alt={img.alt}
-                className="w-full h-full object-cover"
-              />
-              <div className="absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 transition-opacity flex flex-col justify-between p-3">
-                <button
-                  onClick={() => handleDelete(img)}
-                  className="self-end bg-error text-on-error rounded-lg p-1.5 hover:bg-error/80 transition-colors"
-                  title="Remove from gallery"
-                >
-                  <span className="material-symbols-outlined text-base leading-none">
-                    delete
-                  </span>
-                </button>
-                <div>
-                  <p className="text-white font-bold text-xs line-clamp-1">
-                    {img.alt}
-                  </p>
-                  {img.caption && (
-                    <p className="text-white/60 text-xs line-clamp-1 mt-0.5">
-                      {img.caption}
+              <div className="relative aspect-square rounded-lg overflow-hidden">
+                <img
+                  src={img.url}
+                  alt={img.alt}
+                  className="w-full h-full object-cover"
+                />
+                <div className="absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 transition-opacity flex flex-col justify-between p-3">
+                  <button
+                    onClick={() => handleDelete(img)}
+                    className="self-end bg-error text-on-error rounded-lg p-1.5 hover:bg-error/80 transition-colors"
+                    title="Remove from gallery"
+                  >
+                    <span className="material-symbols-outlined text-base leading-none">
+                      delete
+                    </span>
+                  </button>
+                  <div>
+                    <p className="text-white font-bold text-xs line-clamp-1">
+                      {img.alt}
                     </p>
-                  )}
+                    {img.caption && (
+                      <p className="text-white/60 text-xs line-clamp-1 mt-0.5">
+                        {img.caption}
+                      </p>
+                    )}
+                  </div>
                 </div>
+              </div>
+
+              {/* Inline category editor */}
+              <div className="px-1 pt-1.5 pb-2">
+                <input
+                  type="text"
+                  defaultValue={img.category ?? ""}
+                  placeholder="Category…"
+                  onBlur={(e) => handleCategoryBlur(img, e.target.value)}
+                  className="w-full text-xs bg-transparent border-b border-outline-variant/30 focus:border-secondary focus:outline-none text-on-surface-variant placeholder:text-outline-variant py-0.5 transition-colors"
+                />
               </div>
             </div>
           ))}

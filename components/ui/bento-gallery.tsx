@@ -1,4 +1,4 @@
-﻿"use client";
+"use client";
 
 import { cn } from "@/lib/utils";
 import {
@@ -19,6 +19,7 @@ export type BentoImageItem = {
   url: string;       // thumbnail (optimised, smaller)
   fullUrl?: string;  // lightbox (full quality)
   span: string;
+  category?: string;
 };
 
 // Predefined block: 840 × 560 px, tiles with zero gaps
@@ -118,33 +119,92 @@ const ImageModal = ({
   </motion.div>
 );
 
+// Category filter pill bar — shared between desktop and mobile
+function CategoryTabs({
+  categories,
+  selected,
+  onChange,
+}: {
+  categories: string[];
+  selected: string | null;
+  onChange: (cat: string | null) => void;
+}) {
+  if (categories.length === 0) return null;
+  return (
+    <div className="flex flex-wrap justify-center gap-2 mt-6 px-4">
+      <button
+        onClick={() => onChange(null)}
+        className={cn(
+          "px-4 py-1.5 rounded-full text-sm font-label font-semibold tracking-wide transition-colors",
+          selected === null
+            ? "bg-secondary text-on-secondary"
+            : "border border-outline-variant/40 text-on-surface-variant hover:border-secondary/50 hover:text-on-surface",
+        )}
+      >
+        Όλα
+      </button>
+      {categories.map((cat) => (
+        <button
+          key={cat}
+          onClick={() => onChange(cat)}
+          className={cn(
+            "px-4 py-1.5 rounded-full text-sm font-label font-semibold tracking-wide transition-colors",
+            selected === cat
+              ? "bg-secondary text-on-secondary"
+              : "border border-outline-variant/40 text-on-surface-variant hover:border-secondary/50 hover:text-on-surface",
+          )}
+        >
+          {cat}
+        </button>
+      ))}
+    </div>
+  );
+}
+
 interface InteractiveImageBentoGalleryProps {
   imageItems: BentoImageItem[];
+  categories?: string[];
   title: string;
   description: string;
 }
 
 export default function InteractiveImageBentoGallery({
   imageItems,
+  categories = [],
   title,
   description,
 }: InteractiveImageBentoGalleryProps) {
   const [isPanning, setIsPanning] = useState(false);
   const [selected, setSelected] = useState<BentoImageItem | null>(null);
+  const [activeCategory, setActiveCategory] = useState<string | null>(null);
   const wrapperRef = useRef<HTMLDivElement>(null);
   const sectionRef = useRef<HTMLDivElement>(null);
 
-  const { tiles, totalW, totalH } = buildTiles(imageItems);
+  const filteredItems =
+    activeCategory
+      ? imageItems.filter((i) => i.category === activeCategory)
+      : imageItems;
+
+  const displayItems = filteredItems.length > 0 ? filteredItems : imageItems;
+
+  const { tiles, totalW, totalH } = buildTiles(displayItems);
 
   const initialX =
     -(totalW / 2) +
     (typeof window !== "undefined" ? window.innerWidth / 2 : 760);
-  const initialY = -(totalH / 2) + (typeof window !== "undefined" ? 260 : 260); // center canvas vertically in the panel
+  const initialY = -(totalH / 2) + (typeof window !== "undefined" ? 260 : 260);
 
   const rawX = useMotionValue(initialX);
   const rawY = useMotionValue(initialY);
   const x = useSpring(rawX, { stiffness: 200, damping: 40, mass: 1 });
   const y = useSpring(rawY, { stiffness: 200, damping: 40, mass: 1 });
+
+  // Re-centre when category filter changes
+  useEffect(() => {
+    rawX.set(initialX);
+    rawY.set(initialY);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [activeCategory]);
 
   // Wheel pans the canvas (only when pointer is inside the canvas wrapper)
   useEffect(() => {
@@ -209,14 +269,31 @@ export default function InteractiveImageBentoGallery({
   );
   const headerY = useTransform(scrollYProgress, [0, 0.15], [30, 0]);
 
+  // Mobile: group visible items by category
+  const mobileGroups: { label: string; items: BentoImageItem[] }[] = [];
+  if (activeCategory) {
+    mobileGroups.push({ label: activeCategory, items: displayItems });
+  } else if (categories.length > 0) {
+    for (const cat of categories) {
+      const catItems = imageItems.filter((i) => i.category === cat);
+      if (catItems.length > 0) mobileGroups.push({ label: cat, items: catItems });
+    }
+    const uncategorised = imageItems.filter((i) => !i.category);
+    if (uncategorised.length > 0)
+      mobileGroups.push({ label: "Άλλα", items: uncategorised });
+  } else {
+    mobileGroups.push({ label: "", items: imageItems });
+  }
+
   return (
     <section
       ref={sectionRef}
       className="relative w-full min-h-screen bg-background flex flex-col pt-20 sm:pt-28"
     >
+      {/* Header */}
       <motion.div
         style={{ opacity: headerOpacity, y: headerY }}
-        className="container mx-auto px-4 text-center mb-10 shrink-0"
+        className="container mx-auto px-4 text-center mb-4 shrink-0"
       >
         <h2 className="text-3xl font-bold tracking-tight text-foreground sm:text-4xl">
           {title}
@@ -224,13 +301,20 @@ export default function InteractiveImageBentoGallery({
         <p className="mx-auto mt-4 max-w-2xl text-base text-muted-foreground">
           {description}
         </p>
+
+        {/* Category tabs — visible on both desktop and mobile */}
+        <CategoryTabs
+          categories={categories}
+          selected={activeCategory}
+          onChange={setActiveCategory}
+        />
       </motion.div>
 
-      {/* Infinite canvas — fills remaining screen height */}
+      {/* ── DESKTOP: Infinite canvas ── */}
       <div
         ref={wrapperRef}
         className={cn(
-          "relative w-full flex-1 overflow-hidden select-none",
+          "relative w-full flex-1 overflow-hidden select-none hidden md:flex flex-col",
           isPanning ? "cursor-grabbing" : "cursor-grab",
         )}
         onPointerDown={handlePointerDown}
@@ -279,6 +363,44 @@ export default function InteractiveImageBentoGallery({
         {/* Edge fade masks */}
         <div className="pointer-events-none absolute inset-y-0 left-0 w-24 bg-gradient-to-r from-background to-transparent z-10" />
         <div className="pointer-events-none absolute inset-y-0 right-0 w-24 bg-gradient-to-l from-background to-transparent z-10" />
+      </div>
+
+      {/* ── MOBILE: Categorised static grid ── */}
+      <div className="block md:hidden px-4 pb-16 mt-6 space-y-10">
+        {mobileGroups.map((group) => (
+          <div key={group.label}>
+            {group.label && (
+              <h3 className="font-headline font-bold text-on-surface text-lg mb-3 flex items-center gap-3">
+                <span className="flex-1 h-px bg-outline-variant/30" />
+                {group.label}
+                <span className="flex-1 h-px bg-outline-variant/30" />
+              </h3>
+            )}
+            <div className="grid grid-cols-2 gap-2">
+              {group.items.map((item) => (
+                <button
+                  key={item.id}
+                  type="button"
+                  onClick={() => setSelected(item)}
+                  className="relative aspect-square rounded-lg overflow-hidden group focus:outline-none focus-visible:ring-2 focus-visible:ring-secondary"
+                >
+                  <img
+                    src={item.url}
+                    alt={item.title}
+                    className="w-full h-full object-cover"
+                    loading="lazy"
+                    decoding="async"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex flex-col justify-end p-2">
+                    <p className="font-headline text-xs font-bold text-white line-clamp-1">
+                      {item.title}
+                    </p>
+                  </div>
+                </button>
+              ))}
+            </div>
+          </div>
+        ))}
       </div>
 
       <AnimatePresence>

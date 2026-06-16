@@ -12,6 +12,7 @@ export type GalleryImage = {
   url: string;
   alt: string;
   caption: string | null;
+  category: string | null;
   sort_order: number;
   created_at?: string;
 };

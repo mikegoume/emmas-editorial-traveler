@@ -7,6 +7,7 @@ import {
   getOptimizedImageUrl,
   getSiteSetting,
 } from "@/lib/db";
+import { cn } from "@/lib/utils";
 import type { Metadata } from "next";
 
 export const revalidate = 60;
@@ -20,7 +21,14 @@ export const metadata: Metadata = {
     description:
       "Γνώρισε την Emma Mazaraki — φωτογράφο και συγγραφέα ταξιδιωτικών εκδόσεων από το Ηράκλειο Κρήτης. Αργό ταξίδι, editorial φωτογραφία και ιστορίες από τα πέρατα του κόσμου.",
     url: "https://travelwithemma.gr/about",
-    images: [{ url: "/og-image.jpg", width: 1200, height: 630, alt: "Emma Mazaraki — Travel With Emma" }],
+    images: [
+      {
+        url: "/og-image.jpg",
+        width: 1200,
+        height: 630,
+        alt: "Emma Mazaraki — Travel With Emma",
+      },
+    ],
   },
   alternates: { canonical: "/about" },
 };
@@ -68,10 +76,12 @@ export default async function AboutPage() {
     : DEFAULT_BIO;
 
   const stats = [
-    { value: stat1Value || "42", label: stat1Label || "Χώρες" },
-    { value: stat2Value || "150+", label: stat2Label || "Δοκίμια" },
-    { value: stat3Value || "12k", label: stat3Label || "Αναγνώστες" },
-  ];
+    { value: stat1Value, label: stat1Label },
+    { value: stat2Value, label: stat2Label },
+    { value: stat3Value, label: stat3Label },
+  ].filter((s): s is { value: string; label: string } =>
+    Boolean(s.value && s.label),
+  );
 
   return (
     <>
@@ -94,21 +104,32 @@ export default async function AboutPage() {
             </div>
 
             {/* Stats */}
-            <div className="mt-12 grid grid-cols-3 gap-4">
-              {stats.map((stat) => (
-                <div
-                  key={stat.label}
-                  className="p-6 bg-surface-container-low rounded-lg"
-                >
-                  <div className="text-3xl font-extrabold font-headline text-secondary">
-                    {stat.value}
+            {stats.length > 0 && (
+              <div
+                className={cn(
+                  "mt-12 grid gap-4",
+                  stats.length === 1
+                    ? "grid-cols-1 max-w-xs"
+                    : stats.length === 2
+                      ? "grid-cols-2 max-w-sm"
+                      : "grid-cols-3",
+                )}
+              >
+                {stats.map((stat) => (
+                  <div
+                    key={stat.label}
+                    className="p-6 bg-surface-container-low rounded-lg"
+                  >
+                    <div className="text-3xl font-extrabold font-headline text-secondary">
+                      {stat.value}
+                    </div>
+                    <div className="text-sm font-label text-on-surface-variant uppercase tracking-wider mt-1">
+                      {stat.label}
+                    </div>
                   </div>
-                  <div className="text-sm font-label text-on-surface-variant uppercase tracking-wider mt-1">
-                    {stat.label}
-                  </div>
-                </div>
-              ))}
-            </div>
+                ))}
+              </div>
+            )}
           </div>
 
           {/* Portrait */}
@@ -116,8 +137,8 @@ export default async function AboutPage() {
             <div className="aspect-[4/5] rounded-lg overflow-hidden editorial-shadow relative group">
               <img
                 alt="Portrait of the creator"
-                className="w-full h-full object-cover"
-                src={getOptimizedImageUrl(photo, { width: 800, quality: 85 })}
+                className="w-full h-full object-fit"
+                src={getOptimizedImageUrl(photo, { width: 1500, quality: 100 })}
                 fetchPriority="high"
               />
               <div className="absolute bottom-0 left-0 right-0 p-8 bg-gradient-to-t from-primary-dim/60 to-transparent">
