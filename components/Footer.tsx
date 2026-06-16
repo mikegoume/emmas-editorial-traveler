@@ -102,16 +102,28 @@ export default function Footer() {
       <div className="max-w-7xl mx-auto px-12 pb-12">
         <div className="border-t border-outline-variant/10 pt-8 grid grid-cols-1 md:grid-cols-3 gap-6 items-start">
           <div>
-            <p className="text-zinc-400 font-body text-xs uppercase tracking-widest mb-1">Company</p>
-            <span className="text-zinc-600 dark:text-zinc-400 font-body text-sm font-medium">Travel With Emma</span>
+            <p className="text-zinc-400 font-body text-xs uppercase tracking-widest mb-1">
+              Company
+            </p>
+            <span className="text-zinc-600 dark:text-zinc-400 font-body text-sm font-medium">
+              Travel With Emma
+            </span>
           </div>
           <div className="text-left md:text-center">
-            <p className="text-zinc-500 font-body text-sm">© 2025 All Rights Reserved.</p>
-            <p className="text-zinc-400 font-body text-xs mt-1">Design &amp; Development — Mike Goumenakis</p>
+            <p className="text-zinc-500 font-body text-sm">
+              © 2026 All Rights Reserved.
+            </p>
+            <p className="text-zinc-400 font-body text-xs mt-1">
+              Design &amp; Development — Mike Goumenakis
+            </p>
           </div>
           <div className="text-left md:text-right">
-            <p className="text-zinc-400 font-body text-xs uppercase tracking-widest mb-1">Company Address</p>
-            <span className="text-zinc-600 dark:text-zinc-400 font-body text-sm">Heraklion, Crete</span>
+            <p className="text-zinc-400 font-body text-xs uppercase tracking-widest mb-1">
+              Company Address
+            </p>
+            <span className="text-zinc-600 dark:text-zinc-400 font-body text-sm">
+              Heraklion, Crete
+            </span>
           </div>
         </div>
       </div>

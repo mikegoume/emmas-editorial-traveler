@@ -1,8 +1,23 @@
 import TopNavBar from "@/components/TopNavBar";
 import InteractiveImageBentoGallery from "@/components/ui/bento-gallery";
 import { getGalleryImages, getOptimizedImageUrl } from "@/lib/db";
+import type { Metadata } from "next";
 
 export const revalidate = 60;
+
+export const metadata: Metadata = {
+  title: "Γκαλερί",
+  description:
+    "Φωτογραφικό ημερολόγιο ταξιδιών. Εικόνες, φως και ιστορίες από τον φακό της Emma Mazaraki.",
+  openGraph: {
+    title: "Γκαλερί | Travel With Emma",
+    description:
+      "Φωτογραφικό ημερολόγιο ταξιδιών. Εικόνες, φως και ιστορίες από τον φακό της Emma Mazaraki.",
+    url: "https://travelwithemma.gr/gallery",
+    images: [{ url: "/og-image.jpg", width: 1200, height: 630, alt: "Γκαλερί — Travel With Emma" }],
+  },
+  alternates: { canonical: "/gallery" },
+};
 
 const SPANS = [
   "md:col-span-2 md:row-span-2",

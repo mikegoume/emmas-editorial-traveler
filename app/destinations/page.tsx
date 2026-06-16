@@ -8,9 +8,24 @@ import {
   getRegionsWithDestinations,
 } from "@/lib/db";
 import type { Destination } from "@/lib/types";
+import type { Metadata } from "next";
 import Link from "next/link";
 
 export const revalidate = 60;
+
+export const metadata: Metadata = {
+  title: "Προορισμοί",
+  description:
+    "Εξερεύνησε προορισμούς αργού ταξιδιού — από τη Μεσόγειο ως τα πέρατα του κόσμου. Editorial ταξιδιωτικές ιστορίες από την Emma Mazaraki.",
+  openGraph: {
+    title: "Προορισμοί | Travel With Emma",
+    description:
+      "Εξερεύνησε προορισμούς αργού ταξιδιού — από τη Μεσόγειο ως τα πέρατα του κόσμου. Editorial ταξιδιωτικές ιστορίες από την Emma Mazaraki.",
+    url: "https://travelwithemma.gr/destinations",
+    images: [{ url: "/og-image.jpg", width: 1200, height: 630, alt: "Προορισμοί — Travel With Emma" }],
+  },
+  alternates: { canonical: "/destinations" },
+};
 
 export default async function DestinationsPage() {
   const [destinations, regions] = await Promise.all([

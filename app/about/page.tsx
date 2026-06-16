@@ -7,8 +7,23 @@ import {
   getOptimizedImageUrl,
   getSiteSetting,
 } from "@/lib/db";
+import type { Metadata } from "next";
 
 export const revalidate = 60;
+
+export const metadata: Metadata = {
+  title: "Σχετικά με την Emma Mazaraki",
+  description:
+    "Γνώρισε την Emma Mazaraki — φωτογράφο και συγγραφέα ταξιδιωτικών εκδόσεων από το Ηράκλειο Κρήτης. Αργό ταξίδι, editorial φωτογραφία και ιστορίες από τα πέρατα του κόσμου.",
+  openGraph: {
+    title: "Σχετικά με την Emma Mazaraki | Travel With Emma",
+    description:
+      "Γνώρισε την Emma Mazaraki — φωτογράφο και συγγραφέα ταξιδιωτικών εκδόσεων από το Ηράκλειο Κρήτης. Αργό ταξίδι, editorial φωτογραφία και ιστορίες από τα πέρατα του κόσμου.",
+    url: "https://travelwithemma.gr/about",
+    images: [{ url: "/og-image.jpg", width: 1200, height: 630, alt: "Emma Mazaraki — Travel With Emma" }],
+  },
+  alternates: { canonical: "/about" },
+};
 
 const DEFAULT_PHOTO =
   "https://lh3.googleusercontent.com/aida-public/AB6AXuCF_3viPywrcJhKi4OzDiCg3PiRY1hw_oVzRnMEH5nO_ZpT7QixnsePwamOPUupbgc9R38k-p76DcvF2XQkQ9KIeXNb88q7KaK7rwtJejMTp-kw9F_aHrwYkdXp-qTPfIg7dk767vreUfH9XN1xoZR2RQX1V4JTrIBRdInyKWCUFhqyweQ5M5uQs8Gw_VlOMndI95dFA6IKMOoK5SbK1pr4HZWBTmPYAmACeNrvHiiB1WD2lOgv0CfwGQb-m3qbsQ-DzZ8sq99tXg";
