@@ -14,7 +14,14 @@ export const metadata: Metadata = {
     description:
       "Φωτογραφικό ημερολόγιο ταξιδιών. Εικόνες, φως και ιστορίες από τον φακό της Emma Mazaraki.",
     url: "https://travelwithemma.gr/gallery",
-    images: [{ url: "/og-image.jpg", width: 1200, height: 630, alt: "Γκαλερί — Travel With Emma" }],
+    images: [
+      {
+        url: "/og-image.jpg",
+        width: 1200,
+        height: 630,
+        alt: "Γκαλερί — Travel With Emma",
+      },
+    ],
   },
   alternates: { canonical: "/gallery" },
 };
@@ -44,7 +51,8 @@ export default async function GalleryPage() {
               Η γκαλερί έρχεται σύντομα
             </h2>
             <p className="text-on-surface-variant font-body">
-              Οι εικόνες θα εμφανιστούν εδώ μόλις ανεβαστούν στον πίνακα διαχείρισης.
+              Οι εικόνες θα εμφανιστούν εδώ μόλις ανεβαστούν στον πίνακα
+              διαχείρισης.
             </p>
           </div>
         </div>
@@ -56,8 +64,8 @@ export default async function GalleryPage() {
     id: img.id,
     title: img.alt,
     desc: img.caption ?? "",
-    url: getOptimizedImageUrl(img.url, { width: 600, quality: 75 }),
-    fullUrl: getOptimizedImageUrl(img.url, { width: 1600, quality: 90 }),
+    url: img.url,
+    fullUrl: img.url,
     span: SPANS[i % SPANS.length],
     category: img.category ?? "",
   }));
