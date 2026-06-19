@@ -213,7 +213,9 @@ export default async function AboutPage() {
                   <span className="material-symbols-outlined text-secondary font-bold">
                     mail
                   </span>
-                  <span className="font-medium">emmamazaraki1@gmail.com</span>
+                  <span className="font-medium">
+                    travelwithemma2026@gmail.com
+                  </span>
                 </div>
                 <div className="flex items-center gap-4 text-on-surface">
                   <span className="material-symbols-outlined text-secondary font-bold">

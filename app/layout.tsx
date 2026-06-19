@@ -22,7 +22,7 @@ const organizationJsonLd = {
   name: "Travel With Emma",
   url: "https://travelwithemma.gr",
   sameAs: [
-    "https://www.instagram.com/emma_mazaraki/",
+    "https://www.instagram.com/travelwithemma.gr/",
     "https://www.tiktok.com/@emma.mazaraki",
   ],
 };
@@ -43,7 +43,14 @@ export const metadata: Metadata = {
     title: "Travel With Emma",
     description:
       "Ψηφιακό ημερολόγιο αργού ταξιδιού και editorial φωτογραφίας από την Emma Mazaraki.",
-    images: [{ url: "/og-image.jpg", width: 1200, height: 630, alt: "Travel With Emma" }],
+    images: [
+      {
+        url: "/og-image.jpg",
+        width: 1200,
+        height: 630,
+        alt: "Travel With Emma",
+      },
+    ],
   },
   twitter: {
     card: "summary_large_image",
@@ -69,7 +76,9 @@ export default function RootLayout({
       >
         <script
           type="application/ld+json"
-          dangerouslySetInnerHTML={{ __html: JSON.stringify(organizationJsonLd) }}
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify(organizationJsonLd),
+          }}
         />
         <SmoothScroller>
           <PageTransition>{children}</PageTransition>

@@ -16,7 +16,7 @@ export async function sendContactEmailAction(data: {
 
   const { error } = await resend.emails.send({
     from: "Travel With Emma <onboarding@resend.dev>",
-    to: "emmamazaraki1@gmail.com",
+    to: "travelwithemma2026@gmail.com",
     replyTo: data.email,
     subject: `[${data.inquiryType}] Μήνυμα από ${data.name}`,
     html: `
