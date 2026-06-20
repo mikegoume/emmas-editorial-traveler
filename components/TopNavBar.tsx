@@ -11,7 +11,7 @@ export default async function TopNavBar() {
       <div className="flex justify-between items-center px-6 md:px-8 py-4 max-w-7xl mx-auto">
         <Link href="/" className="flex items-center gap-3 shrink-0">
           <Image
-            src="/travel_with_emma_logo.png"
+            src="/logo_transparent.png"
             alt="Travel With Emma"
             width={60}
             height={60}
