@@ -32,17 +32,6 @@ export default async function HomePage() {
     quality: 85,
   });
 
-  const destinationData = destinations.map((dest) => ({
-    id: dest.id,
-    title: dest.title,
-    excerpt: dest.excerpt ?? null,
-    imgSrc: getOptimizedImageUrl(getImageUrl(dest), {
-      width: 800,
-      quality: 75,
-    }),
-    slug: dest.slug,
-  }));
-
   const marqueeImages =
     galleryImages.length > 0
       ? galleryImages
@@ -84,16 +73,9 @@ export default async function HomePage() {
             </div>
           </FadeUp>
 
-          {destinations.length === 0 ? (
-            <p className="text-center py-16 text-outline font-body italic">
-              Δεν υπάρχουν προορισμοί ακόμα — προσθέστε κάποιους από τον πίνακα
-              διαχείρισης!
-            </p>
-          ) : (
-            <FadeUp delay={0.1}>
-              <DestinationExpandingCards destinations={destinationData} />
-            </FadeUp>
-          )}
+          <FadeUp delay={0.1}>
+            <DestinationExpandingCards />
+          </FadeUp>
         </section>
 
         <PortfolioGallery
