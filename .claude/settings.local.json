@@ -13,7 +13,12 @@
       "mcp__supabase__get_logs",
       "mcp__supabase__apply_migration",
       "Bash(pkill -f \"next dev\")",
-      "Bash(npm install *)"
+      "Bash(npm install *)",
+      "Bash(grep -nA15 \"icons\" app/layout.tsx)",
+      "Bash(python3 -c \"import PIL; print\\('PIL', PIL.__version__\\)\")",
+      "Bash(node -e \"try{require\\('sharp'\\);console.log\\('sharp ok'\\)}catch\\(e\\){console.log\\('no sharp'\\)}\")",
+      "Bash(python3 -)",
+      "Bash(rm -f scratch_48.png)"
     ]
   }
 }

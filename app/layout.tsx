@@ -60,10 +60,8 @@ export const metadata: Metadata = {
     images: ["/og-image.jpg"],
   },
   alternates: { canonical: "/" },
-  icons: {
-    icon: [{ url: "/travel_with_emma_logo.png", type: "image/png" }],
-    apple: "/travel_with_emma_logo.png",
-  },
+  // Icons are provided by the app/ file conventions:
+  // app/favicon.ico, app/icon.png, app/apple-icon.png
   verification: { google: "Y4e_po8u45o4VtF3W2Zkj7ujE20PeQ17kLS4WFFBx4s" },
 };
 
