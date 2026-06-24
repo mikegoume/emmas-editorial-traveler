@@ -18,7 +18,9 @@
       "Bash(python3 -c \"import PIL; print\\('PIL', PIL.__version__\\)\")",
       "Bash(node -e \"try{require\\('sharp'\\);console.log\\('sharp ok'\\)}catch\\(e\\){console.log\\('no sharp'\\)}\")",
       "Bash(python3 -)",
-      "Bash(rm -f scratch_48.png)"
+      "Bash(rm -f scratch_48.png)",
+      "Bash(python3 -c \"import Quartz; print\\('Quartz OK'\\)\")",
+      "Bash(python3 -c \"import AppKit; print\\('AppKit OK'\\)\")"
     ]
   }
 }
