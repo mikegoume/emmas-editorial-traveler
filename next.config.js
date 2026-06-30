@@ -12,6 +12,11 @@ const nextConfig = {
       },
     ],
   },
+  webpack: (config) => {
+    // react-pdf/pdfjs reference an optional native `canvas` dep that breaks the build.
+    config.resolve.alias.canvas = false;
+    return config;
+  },
 };
 
 module.exports = nextConfig;

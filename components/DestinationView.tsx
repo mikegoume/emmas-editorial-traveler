@@ -1,4 +1,4 @@
-import DocxViewer from "@/components/DocxViewer";
+import PdfViewerWrapper from "@/components/PdfViewerWrapper";
 import Footer from "@/components/Footer";
 import TopNavBar from "@/components/TopNavBar";
 import { formatDate, getImageUrl, getOptimizedImageUrl } from "@/lib/db";
@@ -114,20 +114,23 @@ export default function DestinationView({
                     prose-headings:font-headline prose-headings:text-on-surface prose-headings:font-bold
                     prose-a:text-secondary prose-a:no-underline hover:prose-a:underline
                     prose-img:rounded-lg prose-img:shadow-md"
-                  dangerouslySetInnerHTML={{ __html: sanitizeContentHtml(destination.content) }}
+                  dangerouslySetInnerHTML={{
+                    __html: sanitizeContentHtml(destination.content),
+                  }}
                 />
               )}
 
+              {/* Full Destination Guide — full width for larger, more readable pages */}
               {documentUrl && (
-                <div>
+                <section className="pb-24 max-w-6xl mx-auto">
                   <h3 className="font-headline text-2xl font-bold text-on-surface mb-6 flex items-center gap-3">
                     <span className="material-symbols-outlined text-secondary">
                       menu_book
                     </span>
                     Πλήρης Οδηγός Προορισμού
                   </h3>
-                  <DocxViewer url={documentUrl} />
-                </div>
+                  <PdfViewerWrapper url={documentUrl} />
+                </section>
               )}
             </div>
           </div>

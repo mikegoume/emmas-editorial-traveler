@@ -17,7 +17,7 @@ export default function DocUpload({ value, onChange }: Props) {
   async function handleFile(file: File) {
     setUploading(true);
     setError(null);
-    const ext = file.name.split(".").pop() || "docx";
+    const ext = file.name.split(".").pop() || "pdf";
     const path = `${Date.now()}-${Math.random().toString(36).slice(2)}.${ext}`;
 
     const { error: uploadError } = await supabase.storage
@@ -38,7 +38,7 @@ export default function DocUpload({ value, onChange }: Props) {
   return (
     <div className="space-y-2">
       <label className="text-xs font-bold uppercase tracking-wider text-on-surface-variant font-label block">
-        Destination Guide (.docx)
+        Destination Guide (.pdf)
       </label>
 
       {value && (
@@ -71,7 +71,7 @@ export default function DocUpload({ value, onChange }: Props) {
               upload_file
             </span>
             <p className="text-sm text-on-surface-variant font-body">
-              Click to upload a .docx file (max 50 MB)
+              Click to upload a .pdf file (max 50 MB)
             </p>
           </>
         )}
@@ -80,7 +80,7 @@ export default function DocUpload({ value, onChange }: Props) {
       <input
         ref={inputRef}
         type="file"
-        accept=".docx,application/vnd.openxmlformats-officedocument.wordprocessingml.document"
+        accept=".pdf,application/pdf"
         className="hidden"
         onChange={(e) => {
           const file = e.target.files?.[0];
