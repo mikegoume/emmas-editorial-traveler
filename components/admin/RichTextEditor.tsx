@@ -1,6 +1,6 @@
 "use client";
 
-import { createClient } from "@/lib/supabase";
+import { uploadToR2 } from "@/lib/upload";
 import Image from "@tiptap/extension-image";
 import { EditorContent, useEditor } from "@tiptap/react";
 import StarterKit from "@tiptap/starter-kit";
@@ -11,14 +11,8 @@ interface Props {
   onChange: (html: string) => void;
 }
 
-async function uploadImageToSupabase(file: File): Promise<string> {
-  const supabase = createClient();
-  const ext = file.name.split(".").pop() ?? "jpg";
-  const path = `content/${Date.now()}-${Math.random().toString(36).slice(2)}.${ext}`;
-  const { error } = await supabase.storage.from("images").upload(path, file);
-  if (error) throw error;
-  const { data } = supabase.storage.from("images").getPublicUrl(path);
-  return data.publicUrl;
+async function uploadContentImage(file: File): Promise<string> {
+  return uploadToR2(file, "images/content");
 }
 
 export default function RichTextEditor({ value, onChange }: Props) {
@@ -40,7 +34,7 @@ export default function RichTextEditor({ value, onChange }: Props) {
         imageItems.forEach((item) => {
           const file = item.getAsFile();
           if (!file) return;
-          uploadImageToSupabase(file)
+          uploadContentImage(file)
             .then((url) => {
               view.dispatch(
                 view.state.tr.replaceSelectionWith(
@@ -60,7 +54,7 @@ export default function RichTextEditor({ value, onChange }: Props) {
         event.preventDefault();
         const pos = view.posAtCoords({ left: event.clientX, top: event.clientY });
         files.forEach((file) => {
-          uploadImageToSupabase(file)
+          uploadContentImage(file)
             .then((url) => {
               const node = view.state.schema.nodes.image.create({ src: url });
               const transaction = view.state.tr.insert(pos?.pos ?? 0, node);

@@ -2,6 +2,7 @@
 
 import { createClient } from "@/lib/supabase";
 import type { GalleryImage } from "@/lib/types";
+import { uploadToR2 } from "@/lib/upload";
 import { useEffect, useRef, useState } from "react";
 
 export default function AdminGalleryPage() {
@@ -87,23 +88,18 @@ export default function AdminGalleryPage() {
     let sortBase = images.length;
 
     for (const file of files) {
-      const ext = file.name.split(".").pop();
-      const path = `gallery/${Date.now()}-${Math.random().toString(36).slice(2)}.${ext}`;
       const autoAlt = file.name.replace(/\.[^.]+$/, "").replace(/[-_]/g, " ");
 
-      const { error: uploadError } = await supabase.storage
-        .from("images")
-        .upload(path, file, { upsert: false });
-
-      if (uploadError) {
-        uploadErrors.push(`${file.name}: ${uploadError.message}`);
+      let publicUrl: string;
+      try {
+        publicUrl = await uploadToR2(file, "images/gallery");
+      } catch (err) {
+        uploadErrors.push(
+          `${file.name}: ${err instanceof Error ? err.message : "upload failed"}`,
+        );
         setProgress((p) => p && { ...p, done: p.done + 1 });
         continue;
       }
-
-      const {
-        data: { publicUrl },
-      } = supabase.storage.from("images").getPublicUrl(path);
 
       const { error: dbError } = await supabase.from("gallery_images").insert({
         url: publicUrl,

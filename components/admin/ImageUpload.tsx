@@ -1,6 +1,6 @@
 "use client";
 
-import { createClient } from "@/lib/supabase";
+import { uploadToR2 } from "@/lib/upload";
 import { useRef, useState } from "react";
 
 interface Props {
@@ -17,27 +17,18 @@ export default function ImageUpload({
   const [uploading, setUploading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const inputRef = useRef<HTMLInputElement>(null);
-  const supabase = createClient();
 
   async function handleFile(file: File) {
     setUploading(true);
     setError(null);
-    const ext = file.name.split(".").pop();
-    const path = `${Date.now()}-${Math.random().toString(36).slice(2)}.${ext}`;
-
-    const { error: uploadError } = await supabase.storage
-      .from("images")
-      .upload(path, file);
-
-    if (uploadError) {
-      setError(uploadError.message);
+    try {
+      const url = await uploadToR2(file, "images");
+      onChange(url);
+    } catch (err) {
+      setError(err instanceof Error ? err.message : "Upload failed");
+    } finally {
       setUploading(false);
-      return;
     }
-
-    const { data } = supabase.storage.from("images").getPublicUrl(path);
-    onChange(data.publicUrl);
-    setUploading(false);
   }
 
   return (
