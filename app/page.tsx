@@ -78,15 +78,6 @@ export default async function HomePage() {
           </FadeUp>
         </section>
 
-        <PortfolioGallery
-          title="Εξερευνήστε το Οπτικό μας Ημερολόγιο"
-          archiveButton={{
-            text: "Δείτε όλες τις φωτογραφίες",
-            href: "/gallery",
-          }}
-          images={marqueeImages}
-        />
-
         {/* ── Explore All ────────────────────────────────────────────── */}
         <section className="py-32 bg-surface-container-low">
           <div className="max-w-3xl mx-auto px-8 text-center">
@@ -111,6 +102,15 @@ export default async function HomePage() {
             </FadeUp>
           </div>
         </section>
+
+        <PortfolioGallery
+          title="Εξερευνήστε το Οπτικό μας Ημερολόγιο"
+          archiveButton={{
+            text: "Δείτε όλες τις φωτογραφίες",
+            href: "/gallery",
+          }}
+          images={marqueeImages}
+        />
       </main>
       <Footer />
     </>

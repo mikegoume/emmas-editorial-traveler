@@ -20,7 +20,13 @@
       "Bash(python3 -)",
       "Bash(rm -f scratch_48.png)",
       "Bash(python3 -c \"import Quartz; print\\('Quartz OK'\\)\")",
-      "Bash(python3 -c \"import AppKit; print\\('AppKit OK'\\)\")"
+      "Bash(python3 -c \"import AppKit; print\\('AppKit OK'\\)\")",
+      "mcp__supabase__list_tables",
+      "Bash(dig +short NS travelwithemma.gr)",
+      "Bash(dig +short A travelwithemma.gr)",
+      "Bash(dig +short www.travelwithemma.gr)",
+      "Bash(dig +short CNAME travelwithemma.gr)",
+      "Bash(dig +short MX travelwithemma.gr)"
     ]
   }
 }
