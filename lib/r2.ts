@@ -15,5 +15,6 @@ export const r2 = new S3Client({
 
 export const R2_BUCKET = process.env.R2_BUCKET!;
 
-// Public base URL that objects are served from (the r2.dev bucket URL, no trailing slash).
-export const R2_PUBLIC_BASE = process.env.NEXT_PUBLIC_R2_PUBLIC_URL!.replace(/\/$/, "");
+// Public base URL objects are served from. Re-exported from lib/media so the CDN origin
+// has exactly one definition shared by uploads and rendering.
+export { CDN_BASE as R2_PUBLIC_BASE } from "./media";

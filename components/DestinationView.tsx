@@ -2,6 +2,7 @@ import PdfViewerWrapper from "@/components/PdfViewerWrapper";
 import Footer from "@/components/Footer";
 import TopNavBar from "@/components/TopNavBar";
 import { formatDate, getImageUrl, getOptimizedImageUrl } from "@/lib/db";
+import { getMediaUrl } from "@/lib/media";
 import type { Destination } from "@/lib/types";
 import Link from "next/link";
 
@@ -20,7 +21,7 @@ export default function DestinationView({
 }) {
   const region = destination.region;
   const heroImage = getImageUrl(destination);
-  const documentUrl = destination.document_url;
+  const documentUrl = getMediaUrl(destination.document_url) || null;
 
   return (
     <>

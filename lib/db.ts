@@ -1,3 +1,4 @@
+import { getMediaUrl } from "./media";
 import { createAnonClient } from "./supabase";
 import { createServerClient } from "./supabase-server";
 import type { Destination, GalleryImage, Region } from "./types";
@@ -8,20 +9,20 @@ export function getOptimizedImageUrl(
   url: string,
   { width = 1200, quality = 80 }: { width?: number; quality?: number } = {},
 ): string {
-  if (!url) return url;
+  const resolved = getMediaUrl(url);
+  if (!resolved) return resolved;
   const STORAGE = "/storage/v1/object/public/";
-  const idx = url.indexOf(STORAGE);
-  if (idx === -1) return url; // external URL — pass through
-  const base = url.slice(0, idx);
-  const path = url.slice(idx + STORAGE.length);
+  const idx = resolved.indexOf(STORAGE);
+  if (idx === -1) return resolved; // R2/external URL — no Supabase render transform
+  const base = resolved.slice(0, idx);
+  const path = resolved.slice(idx + STORAGE.length);
   return `${base}/storage/v1/render/image/public/${path}?width=${width}&quality=${quality}&format=webp`;
 }
 
 export function getImageUrl(item: Destination): string {
+  const stored = item.hero_image_url ?? item.featured_image_url;
   return (
-    item.hero_image_url ??
-    item.featured_image_url ??
-    "https://placehold.co/800x600/eceeef/5b6061?text=No+Image"
+    getMediaUrl(stored) || "https://placehold.co/800x600/eceeef/5b6061?text=No+Image"
   );
 }
 
@@ -150,7 +151,9 @@ export async function getGalleryImages(): Promise<GalleryImage[]> {
     .order("sort_order", { ascending: true })
     .order("created_at", { ascending: true });
   if (error) throw error;
-  return data ?? [];
+  // Resolve at the data layer so every consumer of `img.url` gets a CDN URL without
+  // each render site having to remember to call the helper.
+  return (data ?? []).map((img) => ({ ...img, url: getMediaUrl(img.url) }));
 }
 
 // ─── Site Settings ────────────────────────────────────────────────────────────

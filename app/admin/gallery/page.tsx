@@ -1,5 +1,6 @@
 "use client";
 
+import { getMediaUrl } from "@/lib/media";
 import { createClient } from "@/lib/supabase";
 import type { GalleryImage } from "@/lib/types";
 import { uploadToR2 } from "@/lib/upload";
@@ -25,7 +26,9 @@ export default function AdminGalleryPage() {
       .select("*")
       .order("sort_order", { ascending: true })
       .order("created_at", { ascending: true });
-    setImages(data ?? []);
+    // This page queries Supabase directly, so it normalizes here rather than going
+    // through getGalleryImages().
+    setImages((data ?? []).map((img) => ({ ...img, url: getMediaUrl(img.url) })));
     setLoading(false);
   }
 

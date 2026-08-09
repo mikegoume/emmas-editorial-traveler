@@ -12,6 +12,11 @@ const nextConfig = {
       },
       {
         protocol: "https",
+        hostname: "cdn.daskalosapp.com",
+      },
+      {
+        // Legacy R2 dev origin — kept until every stored URL is migrated off it.
+        protocol: "https",
         hostname: "pub-a51402cc9e374169b51e20457622d401.r2.dev",
       },
     ],
